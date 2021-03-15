@@ -1,0 +1,35 @@
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 80%;
+}
+
+.logo-col {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    width: 15em;
+}
+
+.card-col {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    height: 40%;
+    left: 0%;
+}
+
+.card {
+    width: 50%;
+}
+
+.card-text {
+    display: inline;
+    justify-content: center;
+    position: relative;
+    transform: translateY(-50%);
+    top: 50%;
+}

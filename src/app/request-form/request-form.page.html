@@ -1,0 +1,107 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Request For Blood</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col [sizeMd]="6" [offsetMd]="3" class="logo-col">
+                <ion-img src="assets/images/logo.png" class="logo"></ion-img>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col [sizeMd]="6" [offsetMd]="3">
+                <ion-card>
+                    <form [formGroup]="requestForm" (ngSubmit)="submitRequest()">
+                        <ion-item>
+                            <ion-label position="floating">First Name</ion-label>
+                            <ion-input type="text" formControlName="firstName"></ion-input>
+                        </ion-item>
+                        <div class="required-error"
+                            *ngIf="firstName.touched && requestForm.hasError('required', 'firstName')">
+                            First Name is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="floating">Surname</ion-label>
+                            <ion-input type="text" formControlName="surname"></ion-input>
+                        </ion-item>
+                        <div class="required-error" *ngIf="surname.touched && requestForm.hasError('required', 'surname')">
+                            Surname is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="floating">Blood Group</ion-label>
+                            <ion-input type="text" formControlName="bloodGroup"></ion-input>
+                        </ion-item>
+                        <div class="required-error"
+                            *ngIf="bloodGroup.touched && requestForm.hasError('required', 'bloodGroup')">
+                            Blood Group is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="floating">Number of Units Needed</ion-label>
+                            <ion-input type="number" formControlName="numberOfUnits"></ion-input>
+                        </ion-item>
+                        <div class="required-error" *ngIf="numberOfUnits.touched && requestForm.hasError('required', 'numberOfUnits')">
+                            Number of Units is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="floating">Age</ion-label>
+                            <ion-input type="number" formControlName="age"></ion-input>
+                        </ion-item>
+                        <div class="required-error" *ngIf="age.touched && requestForm.hasError('required', 'age')">
+                            Age is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="floating">NIC Number</ion-label>
+                            <ion-input type="number" formControlName="nicNumber"></ion-input>
+                        </ion-item>
+                        <div class="required-error"
+                            *ngIf="nicNumber.touched && requestForm.hasError('required', 'nicNumber')">
+                            NIC Number is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="floating">Mobile Number</ion-label>
+                            <ion-input type="number" formControlName="mobileNumber"></ion-input>
+                        </ion-item>
+                        <div class="required-error"
+                            *ngIf="mobileNumber.touched && requestForm.hasError('required', 'mobileNumber')">
+                            Mobile Number is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="stacked">Address</ion-label>
+                            <ion-input placeholder="Address Line 1" type="text" formControlName="addressLine1"
+                                autocomplete="none"></ion-input>
+                            <ion-input placeholder="Address Line 2" type="text" formControlName="addressLine2"
+                                autocomplete="none"></ion-input>
+                            <ion-input placeholder="City" type="text" formControlName="city" autocomplete="none">
+                            </ion-input>
+                            <ion-input placeholder="Province" type="text" formControlName="province" autocomplete="none">
+                            </ion-input>
+                        </ion-item>
+                        <div class="required-error" *ngIf="(addressLine1.touched && requestForm.hasError('required', 'addressLine1')) ||
+                                (addressLine2.touched && requestForm.hasError('required', 'addressLine2')) ||
+                                (city.touched && requestForm.hasError('required', 'city')) ||
+                                (province.touched && requestForm.hasError('required', 'province'))">
+                            Complete address is required.
+                        </div>
+                        <ion-item>
+                            <ion-label position="floating">Email Address</ion-label>
+                            <ion-input type="email" formControlName="emailAddress"></ion-input>
+                        </ion-item>
+                        <div class="required-error"
+                            *ngIf="emailAddress.touched && requestForm.hasError('required', 'emailAddress')">
+                            Email Address is required.
+                        </div>
+
+                        <div class="submit-button-container">
+                            <ion-button color="primary" expand="block" type="submit" class="submit-button"
+                                [disabled]="!requestForm.valid">Submit</ion-button>
+                        </div>
+                    </form>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

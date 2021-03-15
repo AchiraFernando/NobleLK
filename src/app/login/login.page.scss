@@ -1,0 +1,45 @@
+.logo-col {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    width: 10em;
+}
+
+.forgot-pass-label {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.login-button-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-button {
+    width: 50%;
+    margin-top: 5%;
+}
+
+.register-col {
+    display: flex;
+    justify-content: center;
+}
+
+.register-label {
+    padding-left: 10px;
+}
+
+.register-span {
+    font-weight: bolder;
+}
+
+.required-error {
+    color: red;
+    padding-top: 0.2rem;
+    padding-left: 5px;
+    font-size: 12px;
+}

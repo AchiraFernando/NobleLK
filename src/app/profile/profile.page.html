@@ -1,0 +1,152 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Profile</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col [sizeMd]="6" [offsetMd]="0">
+                <ion-card>
+                    <ion-list>
+                        <ng-container *ngIf="!isEdit">
+                            <ion-item>
+                                <ion-label position="stacked">Username: </ion-label>
+                                <span>acfelk</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">First Name: </ion-label>
+                                <span>Achira</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Surname: </ion-label>
+                                <span>Fernando</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Blood Bank Donor ID: </ion-label>
+                                <span>1548751245</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Blood Group: </ion-label>
+                                <span>A+</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Age: </ion-label>
+                                <span>24</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Mobile Number: </ion-label>
+                                <span>0715982164</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Current Address: </ion-label>
+                                <span>18, Podusewa Mawatha, Walana, Panadura</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">NIC Number: </ion-label>
+                                <span>971284749V</span>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label position="stacked">Email Address: </ion-label>
+                                <span>achirafernando97@gmail.com</span>
+                            </ion-item>
+                            <div class="submit-button-container">
+                                <ion-button color="primary" class="submit-button" (click)="isEdit = true;">
+                                    Edit</ion-button>
+                            </div>
+                        </ng-container>
+                        <form *ngIf="isEdit" [formGroup]="profileForm" (ngSubmit)="submitClick()">
+                            <ion-item>
+                                <ion-label position="stacked">Username: </ion-label>
+                                <ion-input type="text" formControlName="username"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="isEdit && username.touched && profileForm.hasError('required', 'username')">
+                                Username is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">First Name: </ion-label>
+                                <ion-input type="text" formControlName="firstName"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="isEdit && firstName.touched && profileForm.hasError('required', 'firstName')">
+                                First Name is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">Surname: </ion-label>
+                                <ion-input type="text" formControlName="surname"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="isEdit && surname.touched && profileForm.hasError('required', 'surname')">
+                                Surname is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">Blood Bank Donor ID: </ion-label>
+                                <ion-input type="text" formControlName="donorId"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="isEdit && donorId.touched && profileForm.hasError('required', 'donorId')">
+                                Donor ID is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">Blood Group: </ion-label>
+                                <ion-input type="text" formControlName="bloodGroup"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="isEdit && bloodGroup.touched && profileForm.hasError('required', 'bloodGroup')">
+                                Blood Group is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">Age: </ion-label>
+                                <ion-input type="number" formControlName="age"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="isEdit && age.touched && profileForm.hasError('required', 'age')">
+                                Age is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">Mobile Number: </ion-label>
+                                <ion-input type="number" formControlName="mobileNumber"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="isEdit && mobileNumber.touched && profileForm.hasError('required', 'mobileNumber')">
+                                Mobile Number is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">Current Address: </ion-label>
+                                <ion-input placeholder="Address Line 1" type="text" formControlName="addressLine1" autocomplete="none"></ion-input>
+                                <ion-input placeholder="Address Line 2" type="text" formControlName="addressLine2" autocomplete="none"></ion-input>
+                                <ion-input placeholder="City" type="text" formControlName="city" autocomplete="none"></ion-input>
+                                <ion-input placeholder="Province" type="text" formControlName="province" autocomplete="none"></ion-input>
+                            </ion-item>
+                            <div
+                                class="required-error"
+                                *ngIf="(addressLine1.touched && profileForm.hasError('required', 'addressLine1')) ||
+                                (addressLine2.touched && profileForm.hasError('required', 'addressLine2')) ||
+                                (city.touched && profileForm.hasError('required', 'city')) ||
+                                (province.touched && profileForm.hasError('required', 'province'))"
+                                >
+                                Complete address is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">NIC Number: </ion-label>
+                                <ion-input type="number" formControlName="nicNumber"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="nicNumber.touched && profileForm.hasError('required', 'nicNumber')">
+                                NIC Number is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="stacked">Email Address: </ion-label>
+                                <ion-input type="email" formControlName="emailAddress"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="emailAddress.touched && profileForm.hasError('required', 'emailAddress')">
+                                Email Address is required.
+                            </div>
+
+                            <div class="submit-button-container">
+                                <ion-button color="primary" type="submit" class="submit-button">
+                                    Submit</ion-button>
+                                <ion-button color="primary" class="submit-button">
+                                    Reset</ion-button>
+                            </div>
+                        </form>
+                    </ion-list>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
