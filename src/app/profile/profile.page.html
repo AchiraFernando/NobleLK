@@ -11,59 +11,59 @@
                 <ion-card>
                     <ion-list>
                         <ng-container *ngIf="!isEdit">
-                            <ion-item>
+                            <!-- <ion-item>
                                 <ion-label position="stacked">Username: </ion-label>
-                                <span>acfelk</span>
-                            </ion-item>
+                                <span>{{currentDonorProfile?.username}}</span>
+                            </ion-item> -->
                             <ion-item>
                                 <ion-label position="stacked">First Name: </ion-label>
-                                <span>Achira</span>
+                                <span>{{currentDonorProfile?.firstname}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">Surname: </ion-label>
-                                <span>Fernando</span>
+                                <span>{{currentDonorProfile?.surname}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">Blood Bank Donor ID: </ion-label>
-                                <span>1548751245</span>
+                                <span>{{currentDonorProfile?.bloodBankDonorId}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">Blood Group: </ion-label>
-                                <span>A+</span>
+                                <span>{{currentDonorProfile?.bloodGroup}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">Age: </ion-label>
-                                <span>24</span>
+                                <span>{{currentDonorProfile?.age}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">Mobile Number: </ion-label>
-                                <span>0715982164</span>
+                                <span>{{currentDonorProfile?.mobileNumber}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">Current Address: </ion-label>
-                                <span>18, Podusewa Mawatha, Walana, Panadura</span>
+                                <span>{{buildAddress()}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">NIC Number: </ion-label>
-                                <span>971284749V</span>
+                                <span>{{currentDonorProfile?.nicNumber}}</span>
                             </ion-item>
                             <ion-item>
                                 <ion-label position="stacked">Email Address: </ion-label>
-                                <span>achirafernando97@gmail.com</span>
+                                <span>{{currentDonorProfile?.emailAddress}}</span>
                             </ion-item>
                             <div class="submit-button-container">
-                                <ion-button color="primary" class="submit-button" (click)="isEdit = true;">
+                                <ion-button color="primary" class="submit-button" (click)="editClick()">
                                     Edit</ion-button>
                             </div>
                         </ng-container>
                         <form *ngIf="isEdit" [formGroup]="profileForm" (ngSubmit)="submitClick()">
-                            <ion-item>
+                            <!-- <ion-item>
                                 <ion-label position="stacked">Username: </ion-label>
                                 <ion-input type="text" formControlName="username"></ion-input>
                             </ion-item>
                             <div class="required-error" *ngIf="isEdit && username.touched && profileForm.hasError('required', 'username')">
                                 Username is required.
-                            </div>
+                            </div> -->
                             <ion-item>
                                 <ion-label position="stacked">First Name: </ion-label>
                                 <ion-input type="text" formControlName="firstName"></ion-input>
@@ -124,7 +124,7 @@
                             </div>
                             <ion-item>
                                 <ion-label position="stacked">NIC Number: </ion-label>
-                                <ion-input type="number" formControlName="nicNumber"></ion-input>
+                                <ion-input type="text" formControlName="nicNumber"></ion-input>
                             </ion-item>
                             <div class="required-error" *ngIf="nicNumber.touched && profileForm.hasError('required', 'nicNumber')">
                                 NIC Number is required.
@@ -138,9 +138,9 @@
                             </div>
 
                             <div class="submit-button-container">
-                                <ion-button color="primary" type="submit" class="submit-button">
+                                <ion-button color="primary" type="submit" class="submit-button" [disabled]="!profileForm.valid">
                                     Submit</ion-button>
-                                <ion-button color="primary" class="submit-button">
+                                <ion-button color="primary" class="submit-button" (click)="resetClick()">
                                     Reset</ion-button>
                             </div>
                         </form>

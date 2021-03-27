@@ -16,11 +16,11 @@
                 <ion-card>
                     <form [formGroup]="loginForm" (ngSubmit)="loginClick()">
                         <ion-item>
-                            <ion-label position="floating">Username</ion-label>
-                            <ion-input type="text" formControlName="username"></ion-input>
+                            <ion-label position="floating">Email</ion-label>
+                            <ion-input type="email" formControlName="email"></ion-input>
                         </ion-item>
-                        <div class="required-error" *ngIf="username.touched && loginForm.hasError('required', 'username')">
-                            Username is required.
+                        <div class="required-error" *ngIf="email.touched && loginForm.hasError('required', 'email')">
+                            Email is required.
                         </div>
                         <ion-item>
                             <ion-label position="floating">Password</ion-label>

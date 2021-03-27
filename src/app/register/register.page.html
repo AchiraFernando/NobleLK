@@ -15,13 +15,13 @@
             <ion-col [sizeMd]="6" [offsetMd]="3">
                 <ion-card>
                     <form [formGroup]="registerForm" (ngSubmit)="registerClick()">
-                        <ion-item>
+                        <!-- <ion-item>
                             <ion-label position="floating">Username</ion-label>
                             <ion-input type="text" formControlName="username"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="username.touched && registerForm.hasError('required', 'username')">
                             Username is required.
-                        </div>
+                        </div> -->
                         <ion-item>
                             <ion-label position="floating">First Name</ion-label>
                             <ion-input type="text" formControlName="firstName"></ion-input>
@@ -82,7 +82,7 @@
                         </div>
                         <ion-item>
                             <ion-label position="floating">NIC Number</ion-label>
-                            <ion-input type="number" formControlName="nicNumber"></ion-input>
+                            <ion-input type="text" formControlName="nicNumber"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="nicNumber.touched && registerForm.hasError('required', 'nicNumber')">
                             NIC Number is required.
@@ -107,6 +107,9 @@
                         </ion-item>
                         <div class="required-error" *ngIf="reEnterPassword.touched && registerForm.hasError('required', 'reEnterPassword')">
                             Re-Enter Password is required.
+                        </div>
+                        <div class="required-error" *ngIf="confirmPassword()">
+                            Two passwords doesn't match.
                         </div>
 
                         <div class="submit-button-container">
