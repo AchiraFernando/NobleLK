@@ -25,11 +25,7 @@ export class AuthenticationService {
         this.angularFireAuth.authState.subscribe(user => {
             let currUser = JSON.parse(localStorage.getItem('user')) as User;
             if (user) {
-                this.userData = user;
-                localStorage.setItem('user', JSON.stringify(this.userData));
                 if (!currUser || currUser.uid !== user['uid']) this._userDataChanged.next();
-            } else {
-                localStorage.setItem('user', null);
             }
         });
     }
@@ -39,8 +35,18 @@ export class AuthenticationService {
     }
 
     // login in with email/password
-    public signIn(email: string, password: string) {
-        return this.angularFireAuth.signInWithEmailAndPassword(email, password);
+    public signIn(email: string, password: string, success: () => void, error: (err) => void): void {
+        this.angularFireAuth.signInWithEmailAndPassword(email, password).then((user) => {
+            if (user) {
+                this.userData = user;
+                localStorage.setItem('user', JSON.stringify(this.userData.user));
+            } else {
+                localStorage.setItem('user', null);
+            }
+            success();
+        }).catch((err) => {
+            error(err);
+        });
     }
 
     // register user with email/password
@@ -95,7 +101,7 @@ export class AuthenticationService {
     public signOut() {
         return this.angularFireAuth.signOut().then(() => {
             localStorage.removeItem('user');
-            this.router.navigate(['startup']);
+            this.router.navigate(['login']);
         });
     }
 

@@ -1,0 +1,28 @@
+<!-- <ion-split-pane> -->
+    <ion-menu contentId="content">
+        <ion-header>
+            <ion-toolbar>
+                <ion-title>Menu</ion-title>
+            </ion-toolbar>
+        </ion-header>
+
+        <ion-content>
+            <div class="avatar" *ngIf="isUserLoggedIn && currentUserProfile">
+                <ngx-avatar name="{{currentUserProfile?.firstname}} {{currentUserProfile?.surname}}"></ngx-avatar>
+                <div class="avatar-name-label">
+                    <ion-label>{{currentUserProfile?.firstname}} {{currentUserProfile?.surname}}</ion-label>
+                    <ion-icon name="chevron-forward-circle-outline" class="avatar-name-icon"></ion-icon>
+                </div>
+            </div>
+            <ion-list [ngClass]="currentUserProfile ? 'button-list' : ''">
+                <ion-menu-toggle [autoHide]="false" *ngFor="let p of pages">
+                    <ion-item routerDirection="forward" [class.active-item]="router.url === p.url" button (click)="buttonClick(p.menuId, p.url)">
+                        {{p.title}}
+                    </ion-item>
+                </ion-menu-toggle>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="content" main></ion-router-outlet>
+<!-- </ion-split-pane> -->

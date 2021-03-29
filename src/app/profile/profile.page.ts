@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { CacheService } from '../cache.service';
 import { FireBaseService } from '../firebase/firebase.service';
 import { UserProfile } from '../models/user-profile.model';
 import { User } from '../models/user.model';
@@ -12,13 +13,15 @@ import { ToastService } from '../toast-service/toast.service';
     templateUrl: './profile.page.html',
     styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
 
     public profileForm: FormGroup;
 
     public isEdit: boolean = false;
 
-    public currentDonorProfile: UserProfile;
+    public get currentDonorProfile(): UserProfile {
+        return this.cacheService.userProfile;
+    }
 
     private profileLoader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
         message: 'Loading Profile...'
@@ -33,6 +36,7 @@ export class ProfilePage implements OnInit {
         private loadingController: LoadingController,
         private authenticationService: AuthenticationService,
         private fireBaseService: FireBaseService,
+        private cacheService: CacheService,
     ) {
         this.profileForm = this.formBuilder.group({
             firstName: ['', Validators.required],
@@ -49,6 +53,8 @@ export class ProfilePage implements OnInit {
             nicNumber: ['', Validators.required],
             emailAddress: ['', Validators.required],
         });
+
+        this.loadProfile();
     }
 
     get firstName(): AbstractControl {
@@ -91,10 +97,6 @@ export class ProfilePage implements OnInit {
         return this.profileForm.get('emailAddress');
     }
 
-    ngOnInit() {
-        this.loadProfile();
-    }
-
     private async loadProfile() {
         let donor: User = this.authenticationService.currentUser;
         if (!donor) return;
@@ -102,8 +104,8 @@ export class ProfilePage implements OnInit {
         (await this.profileLoader).present();
 
         this.fireBaseService.getProfile(donor.uid).then(async (userProfile: UserProfile) => {
-            this.currentDonorProfile = userProfile;
             this.initializeProfile();
+            this.cacheService.loadUserProfile(userProfile);
             (await this.profileLoader).dismiss();
         }).catch(async (error) => {
             this.toastService.generateToast(error, 5000);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { ToastService } from '../toast-service/toast.service';
 
@@ -20,6 +20,7 @@ export class LoginPage implements OnInit {
         private authenticationService: AuthenticationService,
         private loadingController: LoadingController,
         private router: Router,
+        private navCtrl: NavController,
     ) {
         this.loginForm = this.formBuilder.group({
             email: ['', Validators.required],
@@ -35,6 +36,20 @@ export class LoginPage implements OnInit {
     }
 
     ngOnInit() {
+        this.checkUserLoggedIn();
+    }
+
+    private async checkUserLoggedIn() {
+        if (this.authenticationService.currentUser) {
+            let loader = this.loadingController.create({
+                message: "Logging in...",
+                duration: 3000,
+            });
+
+            (await loader).present().then(() => {
+                this.router.navigate(['profile']);
+            });
+        }
     }
 
     forgotPasswordClick() {
@@ -52,16 +67,20 @@ export class LoginPage implements OnInit {
 
         (await loader).present();
 
-        this.authenticationService.signIn(this.email.value, this.password.value)
-            .then(async (res) => {
+        this.authenticationService.signIn(
+            this.email.value,
+            this.password.value,
+            async () => {
+                console.log(localStorage.getItem('user'));
                 //verify login through email or phone number
                 this.toastService.generateToast('Login Successful!', 3000);
                 (await loader).dismiss();
-                this.router.navigate(['profile']);
-            }).catch(async (error) => {
-                console.log(error.message);
+                this.navCtrl.navigateBack('/profile');
+            },
+            async (err) => {
+                console.log(err.message);
                 (await loader).dismiss();
-                this.toastService.generateToast(error, 3000);
+                this.toastService.generateToast(err, 3000);
             });
     }
 

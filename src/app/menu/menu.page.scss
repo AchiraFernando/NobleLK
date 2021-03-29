@@ -1,0 +1,28 @@
+.active-item {
+    border-left: 8px solid var(--ion-color-primary);
+}
+
+.avatar {
+    position: relative;
+    display: flex;
+    left: 1em;
+    top: 3%;
+}
+
+.avatar-name-label {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20%;
+}
+
+.avatar-name-icon {
+    left: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.button-list {
+    margin-top: 12%;
+}

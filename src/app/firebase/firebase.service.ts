@@ -13,7 +13,6 @@ export class FireBaseService {
     ) {}
 
     createProfile(userProfile: UserProfile){
-        // return this.angularFirestore.collection('profiles').add(Object.assign({}, userProfile));
         return this.angularFirestore.collection('profiles').doc(userProfile.uid).set((Object.assign({}, userProfile)));
     }
 
@@ -21,7 +20,6 @@ export class FireBaseService {
         let userId: string = userProfile.uid;
         delete userProfile.uid;
         return this.angularFirestore.collection('profiles').doc(userId).update((Object.assign({}, userProfile)));
-        // this.angularFirestore.doc('profiles/' + userProfile.uid).update(userProfile);
     }
 
     getProfile(uid: string) {

@@ -1,52 +1,57 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="ion-page">
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>Login</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
-<ion-content class="padding">
-    <ion-grid>
-        <ion-row>
-            <ion-col [sizeMd]="6" [offsetMd]="3" class="logo-col">
-                <ion-img src="assets/images/logo.png" class="logo"></ion-img>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col [sizeMd]="6" [offsetMd]="3">
-                <ion-card>
-                    <form [formGroup]="loginForm" (ngSubmit)="loginClick()">
-                        <ion-item>
-                            <ion-label position="floating">Email</ion-label>
-                            <ion-input type="email" formControlName="email"></ion-input>
-                        </ion-item>
-                        <div class="required-error" *ngIf="email.touched && loginForm.hasError('required', 'email')">
-                            Email is required.
-                        </div>
-                        <ion-item>
-                            <ion-label position="floating">Password</ion-label>
-                            <ion-input type="Password" formControlName="password"></ion-input>
-                        </ion-item>
-                        <div class="required-error" *ngIf="password.touched && loginForm.hasError('required', 'password')">
-                            Password is required.
-                        </div>
-                        <br/>
-                        <label class="forgot-pass-label" (click)="forgotPasswordClick()">
-                            Forgot password?
-                        </label>
+    <ion-content class="padding">
+        <ion-grid>
+            <ion-row>
+                <ion-col [sizeMd]="6" [offsetMd]="3" class="logo-col">
+                    <ion-img src="assets/images/logo.png" class="logo"></ion-img>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col [sizeMd]="6" [offsetMd]="3">
+                    <ion-card>
+                        <form [formGroup]="loginForm" (ngSubmit)="loginClick()">
+                            <ion-item>
+                                <ion-label position="floating">Email</ion-label>
+                                <ion-input type="email" formControlName="email"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="email.touched && loginForm.hasError('required', 'email')">
+                                Email is required.
+                            </div>
+                            <ion-item>
+                                <ion-label position="floating">Password</ion-label>
+                                <ion-input type="Password" formControlName="password"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="password.touched && loginForm.hasError('required', 'password')">
+                                Password is required.
+                            </div>
+                            <br/>
+                            <label class="forgot-pass-label" (click)="forgotPasswordClick()">
+                                Forgot password?
+                            </label>
 
-                        <div class="login-button-container">
-                            <ion-button color="primary" expand="block" type="submit" class="login-button" [disabled]="!loginForm.valid">Login</ion-button>
-                        </div>
-                    </form>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col [sizeMd]="6" [offsetMd]="3" class="register-col">
-                <label class="register-label" (click)="registerClick()">
-                    Don't have an account? <a  class="register-span" [routerLink]="'/register'">Register Now.</a>
-                </label>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-content>
+                            <div class="login-button-container">
+                                <ion-button color="primary" expand="block" type="submit" class="login-button" [disabled]="!loginForm.valid">Login</ion-button>
+                            </div>
+                        </form>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col [sizeMd]="6" [offsetMd]="3" class="register-col">
+                    <label class="register-label" (click)="registerClick()">
+                        Don't have an account? <a  class="register-span" [routerLink]="'/register'">Register Now.</a>
+                    </label>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-content>
+</div>
