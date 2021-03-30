@@ -28,6 +28,10 @@ const routes: Routes = [
                 path: 'request-form',
                 loadChildren: () => import('../request-form/request-form.module').then( m => m.RequestFormPageModule)
             },
+            {
+                path: 'otp-authentication',
+                loadChildren: () => import('../otp-authentication/otp-authentication.module').then( m => m.OtpAuthenticationPageModule)
+            },
         ]
     }
 ];

@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { Subject, Observable } from "rxjs";
 import { UserProfile } from "../models/user-profile.model";
 import { User } from "../models/user.model";
+import firebase from "firebase/app";
 
 
 @Injectable({
@@ -35,18 +36,17 @@ export class AuthenticationService {
     }
 
     // login in with email/password
-    public signIn(email: string, password: string, success: () => void, error: (err) => void): void {
-        this.angularFireAuth.signInWithEmailAndPassword(email, password).then((user) => {
-            if (user) {
-                this.userData = user;
-                localStorage.setItem('user', JSON.stringify(this.userData.user));
-            } else {
-                localStorage.setItem('user', null);
-            }
-            success();
-        }).catch((err) => {
-            error(err);
-        });
+    public signIn(email: string, password: string) {
+        return this.angularFireAuth.signInWithEmailAndPassword(email, password);
+    }
+
+    public saveUserLocally(user): void {
+        if (user) {
+            this.userData = user;
+            localStorage.setItem('user', JSON.stringify(this.userData.user));
+        } else {
+            localStorage.setItem('user', null);
+        }
     }
 
     // register user with email/password
@@ -70,6 +70,10 @@ export class AuthenticationService {
             }).catch((error) => {
                 window.alert(error);
         });
+    }
+
+    public authenticatePhoneNumber(phoneNumber: string, recaptureVerifier) {
+        return this.angularFireAuth.signInWithPhoneNumber(phoneNumber, recaptureVerifier);
     }
 
     // returns true when user is logged in

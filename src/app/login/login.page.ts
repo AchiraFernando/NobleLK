@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, ModalController, NavController } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { OtpAuthenticationPage } from '../otp-authentication/otp-authentication.page';
 import { ToastService } from '../toast-service/toast.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class LoginPage implements OnInit {
         private loadingController: LoadingController,
         private router: Router,
         private navCtrl: NavController,
+        private modalController: ModalController,
     ) {
         this.loginForm = this.formBuilder.group({
             email: ['', Validators.required],
@@ -37,6 +39,17 @@ export class LoginPage implements OnInit {
 
     ngOnInit() {
         this.checkUserLoggedIn();
+    }
+
+    public async presentModal() {
+        const modal = await this.modalController.create({
+        component: OtpAuthenticationPage,
+            cssClass: 'my-custom-class'
+        });
+
+        await modal.present();
+
+        return modal.onDidDismiss();
     }
 
     private async checkUserLoggedIn() {
@@ -56,10 +69,6 @@ export class LoginPage implements OnInit {
         console.log('forgot password clicked!');
     }
 
-    registerClick() {
-        console.log('register clicked!');
-    }
-
     public async loginClick() {
         let loader = this.loadingController.create({
             message: 'Loading...'
@@ -67,21 +76,24 @@ export class LoginPage implements OnInit {
 
         (await loader).present();
 
-        this.authenticationService.signIn(
-            this.email.value,
-            this.password.value,
-            async () => {
-                console.log(localStorage.getItem('user'));
-                //verify login through email or phone number
-                this.toastService.generateToast('Login Successful!', 3000);
+        this.authenticationService.signIn(this.email.value, this.password.value)
+            .then(async (user) => {
                 (await loader).dismiss();
-                this.navCtrl.navigateBack('/profile');
-            },
-            async (err) => {
-                console.log(err.message);
+                // verify login through email or phone number
+                this.presentModal().then((event) => {
+                    let isVerified: boolean = event.data['verified'];
+                    if (isVerified) {
+                        this.authenticationService.saveUserLocally(user);
+                        this.toastService.generateToast('Login Successful!', 3000);
+                        this.navCtrl.navigateBack('/profile');
+                    }
+                });
+            }).catch(async (error) => {
+                 console.log(error.message);
                 (await loader).dismiss();
-                this.toastService.generateToast(err, 3000);
-            });
+                this.toastService.generateToast(error, 3000);
+            })
+
     }
 
 }

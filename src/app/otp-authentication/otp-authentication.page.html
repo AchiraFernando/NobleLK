@@ -1,0 +1,48 @@
+<div class="ion-page">
+    <ion-header>
+        <ion-toolbar>
+            <div style="display: flex;">
+                <ion-title>OTP Verification</ion-title>
+                <ion-button color="light" fill="solid" (click)="closeModal()">CLOSE</ion-button>
+            </div>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="padding">
+        <div id="recaptcha-container"></div>
+        <ion-grid>
+            <ion-row>
+                <ion-col [sizeMd]="6" [offsetMd]="3">
+                    <ion-card style="top: 40%;">
+                        <form [formGroup]="otpForm" (ngSubmit)="verifyOTP()">
+                            <div>
+                                <div>
+                                    <ion-item>
+                                        <ion-label position="floating">Phone number</ion-label>
+                                        <ion-input type="number" formControlName="phoneNumber"></ion-input>
+                                    </ion-item>
+                                    <div class="required-error" *ngIf="phoneNumber.touched && otpForm.hasError('required', 'phoneNumber')">
+                                        Phone Number is required.
+                                    </div>
+                                </div>
+                                <ion-button color="primary" class="resend-button" (click)="sendOTP()">{{getSendText()}}</ion-button>
+                            </div>
+                            <ion-item>
+                                <ion-label position="floating">Code</ion-label>
+                                <ion-input type="number" formControlName="code"></ion-input>
+                            </ion-item>
+                            <div class="required-error" *ngIf="code.touched && otpForm.hasError('required', 'code')">
+                                Verification code is required.
+                            </div>
+                            <br />
+                            <div class="verify-button-container">
+                                <ion-button color="primary" expand="block" type="submit" class="verify-button" [disabled]="!otpForm.valid">Verify
+                                </ion-button>
+                            </div>
+                        </form>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-content>
+</div>
