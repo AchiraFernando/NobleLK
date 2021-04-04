@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { FireBaseService } from '../firebase/firebase.service';
 import { UserProfile } from '../models/user-profile.model';
-import { User } from '../models/user.model';
 import { ToastService } from '../toast-service/toast.service';
 
 @Component({
@@ -17,8 +16,11 @@ export class RegisterPage implements OnInit {
 
     public registerForm: FormGroup;
 
-    private loader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
-        message: 'Loading...'
+    private registeringLoader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
+        message: 'Donor Registering...'
+    });
+    private profileCreatingLoader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
+        message: 'Profile Creating...'
     });
 
     constructor(
@@ -27,11 +29,11 @@ export class RegisterPage implements OnInit {
         private loadingController: LoadingController,
         private authenticationService: AuthenticationService,
         private fireBaseService: FireBaseService,
+        private router: Router,
     ) {
         this.registerForm = this.formBuilder.group({
             firstName: ['', Validators.required],
             surname: ['', Validators.required],
-            // username: ['', Validators.required],
             donorId: ['', Validators.required],
             bloodGroup: ['', Validators.required],
             age: ['', Validators.required],
@@ -53,9 +55,6 @@ export class RegisterPage implements OnInit {
     get surname(): AbstractControl {
         return this.registerForm.get('surname');
     }
-    // get username(): AbstractControl {
-    //     return this.registerForm.get('username');
-    // }
     get donorId(): AbstractControl {
         return this.registerForm.get('donorId');
     }
@@ -93,37 +92,32 @@ export class RegisterPage implements OnInit {
         return this.registerForm.get('reEnterPassword');
     }
 
-    ngOnInit() {
-        this.authenticationService.userDataChanged.subscribe(() => {
-            //create the user profile here
-            this.createDonorProfile();
-        });
-    }
+    ngOnInit() {}
 
     public registerClick() {
         this.signUp(this.emailAddress.value, this.password.value);
     }
 
     private async signUp(email: string, password: string) {
-        (await this.loader).present();
+        (await this.registeringLoader).present();
 
         this.authenticationService.registerUser(email, password)
-            .then((res) => {
-                //Do something here
+            .then(async (res) => {
+                console.log('user: ', res.user.uid);
+                (await this.registeringLoader).dismiss();
+                this.createDonorProfile(res.user.uid)
             }).catch(async (error) => {
-                (await this.loader).dismiss();
+                (await this.registeringLoader).dismiss();
                 console.log(error.message)
-                this.toastService.generateToast('Error occured when registering', 5000);
+                this.toastService.generateToast(error.message, 5000);
             }
         );
     }
 
-    private async createDonorProfile() {
-        let currentUser: User = this.authenticationService.currentUser;
-        if (!currentUser) return;
+    private async createDonorProfile(uid: string) {
+        (await this.profileCreatingLoader).present();
         let donorProfile: UserProfile = new UserProfile();
-        donorProfile.uid = currentUser.uid;
-        // donorProfile.username = this.username.value;
+        donorProfile.uid = uid;
         donorProfile.firstname = this.firstName.value;
         donorProfile.surname = this.surname.value;
         donorProfile.bloodBankDonorId = this.donorId.value;
@@ -139,10 +133,11 @@ export class RegisterPage implements OnInit {
 
         this.fireBaseService.createProfile(donorProfile)
             .then(async (res) => {
-                (await this.loader).dismiss();
+                (await this.profileCreatingLoader).dismiss();
                 this.toastService.generateToast('Donor registered successfully!', 3000);
+                this.router.navigate(['login']);
             }).catch(async (error) => {
-                (await this.loader).dismiss();
+                (await this.profileCreatingLoader).dismiss();
                 console.error(error);
                 this.toastService.generateToast('Error occured when registering', 5000);
             })

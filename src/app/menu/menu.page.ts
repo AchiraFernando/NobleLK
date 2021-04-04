@@ -53,6 +53,9 @@ export class MenuPage implements OnInit {
             case 'profile':
                 this.router.navigateByUrl(url);
                 break;
+            case 'request-blood':
+                this.router.navigateByUrl(url);
+                break;
             case 'logout':
                 this.authenticationService.signOut();
                 this.cacheService.clearCurrentUser();
@@ -126,9 +129,9 @@ export class MenuPage implements OnInit {
                     url: '/'
                 },
                 {
-                    menuId: 'New Blood Request',
-                    title: 'request-form',
-                    url: '/'
+                    menuId: 'request-blood',
+                    title: 'New Blood Request',
+                    url: '/request-blood'
                 }
             ]
         }

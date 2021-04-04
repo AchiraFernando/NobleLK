@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { FireBaseService } from '../firebase/firebase.service';
 import { BloodRequest } from '../models/blood-request.model';
@@ -19,6 +20,7 @@ export class RequestFormPage implements OnInit {
         private fireBaseService: FireBaseService,
         private loadingController: LoadingController,
         private toastService: ToastService,
+        private router: Router,
     ) {
         this.requestForm = this.formBuilder.group({
             firstName: ['', Validators.required],
@@ -100,11 +102,12 @@ export class RequestFormPage implements OnInit {
         this.fireBaseService.createBloodRequest(request)
             .then(async (res) => {
                 (await loader).dismiss();
-                this.toastService.generateToast('Donor registered successfully!', 3000);
+                this.toastService.generateToast('Request successfull!', 3000);
+                this.router.navigate(['registered-donors']);
             }).catch(async (error) => {
                 (await loader).dismiss();
                 console.error(error);
-                this.toastService.generateToast('Error occured when registering', 5000);
+                this.toastService.generateToast('Error occured when requesting', 5000);
             })
     }
 

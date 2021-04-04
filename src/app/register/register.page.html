@@ -47,8 +47,26 @@
                             Donor ID is required.
                         </div>
                         <ion-item>
-                            <ion-label position="floating">Blood Group</ion-label>
-                            <ion-input type="text" formControlName="bloodGroup"></ion-input>
+                            <ion-label>Blood Group</ion-label>
+                            <ion-select placeholder="Select One" formControlName="bloodGroup">
+                                <ion-select-option value="A+">A+</ion-select-option>
+                                <ion-select-option value="A-">A-</ion-select-option>
+                                <ion-select-option value="A1+">A1+</ion-select-option>
+                                <ion-select-option value="A1-">A1-</ion-select-option>
+                                <ion-select-option value="A1B+">A1B+</ion-select-option>
+                                <ion-select-option value="A1B-">A1B-</ion-select-option>
+                                <ion-select-option value="A2+">A2+</ion-select-option>
+                                <ion-select-option value="A2-">A2-</ion-select-option>
+                                <ion-select-option value="A2B+">A2B+</ion-select-option>
+                                <ion-select-option value="A2B-">A2B-</ion-select-option>
+                                <ion-select-option value="AB+">AB+</ion-select-option>
+                                <ion-select-option value="AB-">AB-</ion-select-option>
+                                <ion-select-option value="B+">B+</ion-select-option>
+                                <ion-select-option value="B-">B-</ion-select-option>
+                                <ion-select-option value="INRA">INRA</ion-select-option>
+                                <ion-select-option value="O+">O+</ion-select-option>
+                                <ion-select-option value="O-">O-</ion-select-option>
+                            </ion-select>
                         </ion-item>
                         <div class="required-error" *ngIf="bloodGroup.touched && registerForm.hasError('required', 'bloodGroup')">
                             Blood Group is required.

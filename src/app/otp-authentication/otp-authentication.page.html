@@ -19,7 +19,7 @@
                                 <div>
                                     <ion-item>
                                         <ion-label position="floating">Phone number</ion-label>
-                                        <ion-input type="number" formControlName="phoneNumber"></ion-input>
+                                        <ion-input type="number" formControlName="phoneNumber" placeholder="0718956841"></ion-input>
                                     </ion-item>
                                     <div class="required-error" *ngIf="phoneNumber.touched && otpForm.hasError('required', 'phoneNumber')">
                                         Phone Number is required.
@@ -29,7 +29,7 @@
                             </div>
                             <ion-item>
                                 <ion-label position="floating">Code</ion-label>
-                                <ion-input type="number" formControlName="code"></ion-input>
+                                <ion-input type="number" formControlName="code" placeholder="000000"></ion-input>
                             </ion-item>
                             <div class="required-error" *ngIf="code.touched && otpForm.hasError('required', 'code')">
                                 Verification code is required.

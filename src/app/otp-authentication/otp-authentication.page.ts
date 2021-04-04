@@ -59,7 +59,7 @@ export class OtpAuthenticationPage implements OnInit {
 
         (await sendingLoader).present();
 
-        let strPhoneNumber = '+' + this.phoneNumber.value.toString();
+        let strPhoneNumber = '+94' + this.phoneNumber.value.toString();
         this.authenticationService.authenticatePhoneNumber(strPhoneNumber, this.applicationVerifier).then(async (result) => {
             this.otpSent = true;
             this.confirmationResult = result;

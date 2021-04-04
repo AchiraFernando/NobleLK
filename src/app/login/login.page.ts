@@ -81,11 +81,13 @@ export class LoginPage implements OnInit {
                 (await loader).dismiss();
                 // verify login through email or phone number
                 this.presentModal().then((event) => {
-                    let isVerified: boolean = event.data['verified'];
-                    if (isVerified) {
-                        this.authenticationService.saveUserLocally(user);
-                        this.toastService.generateToast('Login Successful!', 3000);
-                        this.navCtrl.navigateBack('/profile');
+                    if (event && event.data) {
+                        let isVerified: boolean = event.data['verified'];
+                        if (isVerified) {
+                            this.authenticationService.saveUserLocally(user);
+                            this.toastService.generateToast('Login Successful!', 3000);
+                            this.navCtrl.navigateBack('/profile');
+                        }
                     }
                 });
             }).catch(async (error) => {
