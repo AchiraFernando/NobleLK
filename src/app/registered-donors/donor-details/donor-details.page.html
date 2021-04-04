@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ donor?.firstname }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row>
+            <ion-col [sizeMd]="6" [offsetMd]="0">
+                <ion-card>
+                    <ion-item>
+                        <ion-label position="stacked" style="color: grey;">Firstname</ion-label>
+                        <ion-input [value]="donor?.firstname" [readonly]="true"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked" style="color: grey;">Surname</ion-label>
+                        <ion-input [value]="donor?.surname" [readonly]="true"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked" style="color: grey;">Blood Bank Donor ID</ion-label>
+                        <ion-input [value]="donor?.bloodBankDonorId" [readonly]="true"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked" style="color: grey;">Age</ion-label>
+                        <ion-input [value]="donor?.age" [readonly]="true"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked" style="color: grey;">Email Address</ion-label>
+                        <ion-input [value]="donor?.emailAddress" [readonly]="true"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked" style="color: grey;">Mobile Number</ion-label>
+                        <ion-input [value]="donor?.mobileNumber" [readonly]="true"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label position="stacked" style="color: grey;">Current Address</ion-label>
+                        <ion-input [value]="generateAddress(donor)" [readonly]="true"></ion-input>
+                    </ion-item>
+                </ion-card>
+                <ion-button color="primary">Contact by Phone</ion-button>
+                <ion-button color="primary">View Current Location</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoadingController } from '@ionic/angular';
+import { FireBaseService } from '../firebase/firebase.service';
+import { BloodRequest } from '../models/blood-request.model';
+import { ToastService } from '../toast-service/toast.service';
 
 @Component({
     selector: 'app-request-form',
@@ -12,6 +16,9 @@ export class RequestFormPage implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
+        private fireBaseService: FireBaseService,
+        private loadingController: LoadingController,
+        private toastService: ToastService,
     ) {
         this.requestForm = this.formBuilder.group({
             firstName: ['', Validators.required],
@@ -69,8 +76,36 @@ export class RequestFormPage implements OnInit {
     ngOnInit() {
     }
 
-    public submitRequest() {
+    public async submitRequest() {
+        let loader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
+            message: 'Loading...'
+        });
 
+        (await loader).present();
+
+        let request: BloodRequest = new BloodRequest();
+        request.firstname = this.firstName.value;
+        request.surname = this.surname.value;
+        request.numberOfUnits = this.numberOfUnits.value;
+        request.bloodGroup = this.bloodGroup.value;
+        request.age = this.age.value;
+        request.mobileNumber = this.mobileNumber.value;
+        request.addressLine1 = this.addressLine1.value;
+        request.addressLine2 = this.addressLine2.value;
+        request.city = this.city.value;
+        request.province = this.province.value;
+        request.nicNumber = this.nicNumber.value;
+        request.emailAddress = this.emailAddress.value;
+
+        this.fireBaseService.createBloodRequest(request)
+            .then(async (res) => {
+                (await loader).dismiss();
+                this.toastService.generateToast('Donor registered successfully!', 3000);
+            }).catch(async (error) => {
+                (await loader).dismiss();
+                console.error(error);
+                this.toastService.generateToast('Error occured when registering', 5000);
+            })
     }
 
 }

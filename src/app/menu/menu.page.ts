@@ -118,7 +118,29 @@ export class MenuPage implements OnInit {
                 },
             ]
         }
-
+        if (this.router.url === '/registered-donors') {
+            return [
+                {
+                    menuId: 'startup',
+                    title: 'Start-Up',
+                    url: '/'
+                },
+                {
+                    menuId: 'New Blood Request',
+                    title: 'request-form',
+                    url: '/'
+                }
+            ]
+        }
+        if (this.router.url === '/request-blood') {
+            return [
+                {
+                    menuId: 'startup',
+                    title: 'Start-Up',
+                    url: '/'
+                }
+            ]
+        }
     }
 
 }

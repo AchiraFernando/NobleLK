@@ -25,12 +25,20 @@ const routes: Routes = [
                 loadChildren: () => import('../profile/profile.module').then( m => m.ProfilePageModule)
             },
             {
-                path: 'request-form',
+                path: 'request-blood',
                 loadChildren: () => import('../request-form/request-form.module').then( m => m.RequestFormPageModule)
             },
             {
                 path: 'otp-authentication',
                 loadChildren: () => import('../otp-authentication/otp-authentication.module').then( m => m.OtpAuthenticationPageModule)
+            },
+            {
+                path: 'registered-donors',
+                loadChildren: () => import('../registered-donors/registered-donors.module').then( m => m.RegisteredDonorsPageModule)
+            },
+            {
+                path: 'donor-details',
+                loadChildren: () => import('../registered-donors/donor-details/donor-details.module').then( m => m.DonorDetailsPageModule)
             },
         ]
     }

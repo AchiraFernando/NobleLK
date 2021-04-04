@@ -1,13 +1,20 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { UserProfile } from "../models/user-profile.model";
 import { AngularFirestore } from '@angular/fire/firestore'
 import { map } from 'rxjs/operators';
+import { BloodRequest } from "../models/blood-request.model";
 
 @Injectable({
     providedIn: 'root'
 })
 export class FireBaseService {
+
+    public userProfiles: UserProfile[] = [];
+
+    private _userProfilesChanged: Subject<UserProfile[]> = new Subject();
+    public userProfileChanged: Observable<UserProfile[]> = this._userProfilesChanged.asObservable();
+
     constructor(
         private angularFirestore: AngularFirestore
     ) {}
@@ -36,5 +43,17 @@ export class FireBaseService {
             throw new Error("Failed to fetch the donor profile!");
         });
     }
+
+    createBloodRequest(bloodRequest: BloodRequest) {
+        return this.angularFirestore.collection('requests').add(Object.assign({}, bloodRequest));
+    }
+
+    public fetchDonorProfiles() {
+        this.angularFirestore.collection('profiles').valueChanges().subscribe((profile) => {
+            this.userProfiles = profile as UserProfile[];
+            this._userProfilesChanged.next(this.userProfiles);
+        })
+    }
+
 
 }
