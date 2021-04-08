@@ -1,5 +1,7 @@
 {
   "name": "blood-tracker",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
