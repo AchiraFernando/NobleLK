@@ -15,6 +15,8 @@ export class FireBaseService {
     private _userProfilesChanged: Subject<UserProfile[]> = new Subject();
     public userProfileChanged: Observable<UserProfile[]> = this._userProfilesChanged.asObservable();
 
+    public bloodRequest: BloodRequest;
+
     constructor(
         private angularFirestore: AngularFirestore
     ) {}

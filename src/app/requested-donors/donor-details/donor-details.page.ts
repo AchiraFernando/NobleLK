@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { FireBaseService } from 'src/app/firebase/firebase.service';
 import { UserProfile } from 'src/app/models/user-profile.model';
-import { Donor } from '../registered-donors.page';
 
 @Component({
     selector: 'app-donor-details',
@@ -38,11 +37,11 @@ export class DonorDetailsPage implements OnInit {
                 this.donorList = this.firebaseService.userProfiles;
                 (await this.loader).dismiss();
                 this.donor = this.donorList.find((donor) => donor.uid === donorId.toString());
-            })
+            });
         }
     }
 
-    public generateAddress(donor: Donor): string {
+    public generateAddress(donor: UserProfile): string {
         if (!donor) return '';
         if (donor.addressLine1 && donor.addressLine2 && donor.city) {
             return `${donor.addressLine1}, ${donor.addressLine2}, ${donor.city}, ${donor.province}`;

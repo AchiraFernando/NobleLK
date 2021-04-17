@@ -33,12 +33,12 @@ const routes: Routes = [
                 loadChildren: () => import('../otp-authentication/otp-authentication.module').then( m => m.OtpAuthenticationPageModule)
             },
             {
-                path: 'registered-donors',
-                loadChildren: () => import('../registered-donors/registered-donors.module').then( m => m.RegisteredDonorsPageModule)
+                path: 'requested-donors',
+                loadChildren: () => import('../requested-donors/requested-donors.module').then( m => m.RequestedDonorsPageModule)
             },
             {
                 path: 'donor-details',
-                loadChildren: () => import('../registered-donors/donor-details/donor-details.module').then( m => m.DonorDetailsPageModule)
+                loadChildren: () => import('../requested-donors/donor-details/donor-details.module').then( m => m.DonorDetailsPageModule)
             },
         ]
     }

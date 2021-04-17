@@ -121,7 +121,7 @@ export class MenuPage implements OnInit {
                 },
             ]
         }
-        if (this.router.url === '/registered-donors') {
+        if (this.router.url === '/requested-donors') {
             return [
                 {
                     menuId: 'startup',
