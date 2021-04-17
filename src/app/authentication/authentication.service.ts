@@ -24,7 +24,7 @@ export class AuthenticationService {
         private ngZone: NgZone,
     ) {
         this.angularFireAuth.authState.subscribe(user => {
-            let currUser = JSON.parse(localStorage.getItem('user')) as User;
+            let currUser: User = JSON.parse(localStorage.getItem('user')) as User;
             if (user) {
                 if (!currUser || currUser.uid !== user['uid']) this._userDataChanged.next();
             }
@@ -56,10 +56,7 @@ export class AuthenticationService {
 
     // email verification when new user register
     public sendVerificationEmail() {
-        return this.angularFireAuth.currentUser.then(u => u.sendEmailVerification())
-            .then(() => {
-                this.router.navigate(['verify-email']);
-            });
+        return this.angularFireAuth.currentUser.then(u => u.sendEmailVerification());
     }
 
     // recover password
@@ -83,8 +80,8 @@ export class AuthenticationService {
     }
 
     // returns true when user's email is verified
-    public get isEmailVerified(): boolean {
-        const user = JSON.parse(localStorage.getItem('user'));
+    public async isEmailVerified() {
+        const user = await this.angularFireAuth.currentUser;
         return (user.emailVerified !== false) ? true : false;
     }
 
@@ -95,7 +92,7 @@ export class AuthenticationService {
             uid: user.uid,
             email: user.email,
             emailVerified: user.emailVerified,
-        }
+        };
         return userRef.set(userData, {
             merge: true,
         });

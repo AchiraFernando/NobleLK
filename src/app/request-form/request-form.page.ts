@@ -103,7 +103,7 @@ export class RequestFormPage implements OnInit {
             .then(async (res) => {
                 (await loader).dismiss();
                 this.toastService.generateToast('Request successfull!', 3000);
-                this.router.navigate(['registered-donors']);
+                this.router.navigate(['requested-donors']);
             }).catch(async (error) => {
                 (await loader).dismiss();
                 console.error(error);

@@ -53,7 +53,7 @@ export class LoginPage implements OnInit {
     }
 
     private async checkUserLoggedIn() {
-        if (this.authenticationService.currentUser) {
+        if (this.authenticationService.isLoggedIn) {
             let loader = this.loadingController.create({
                 message: "Logging in...",
                 duration: 3000,
@@ -75,6 +75,13 @@ export class LoginPage implements OnInit {
         });
 
         (await loader).present();
+
+        let isEmailVerified: boolean = await this.authenticationService.isEmailVerified();
+        if (!isEmailVerified) {
+            (await loader).dismiss();
+            this.toastService.generateToast('Login Failed, Please check your mail to verify the donor before login.', 5000);
+            return;
+        }
 
         this.authenticationService.signIn(this.email.value, this.password.value)
             .then(async (user) => {

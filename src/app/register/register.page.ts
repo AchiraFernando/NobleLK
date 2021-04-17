@@ -105,10 +105,10 @@ export class RegisterPage implements OnInit {
             .then(async (res) => {
                 console.log('user: ', res.user.uid);
                 (await this.registeringLoader).dismiss();
-                this.createDonorProfile(res.user.uid)
+                this.createDonorProfile(res.user.uid);
             }).catch(async (error) => {
                 (await this.registeringLoader).dismiss();
-                console.log(error.message)
+                console.log(error.message);
                 this.toastService.generateToast(error.message, 5000);
             }
         );
@@ -134,13 +134,15 @@ export class RegisterPage implements OnInit {
         this.fireBaseService.createProfile(donorProfile)
             .then(async (res) => {
                 (await this.profileCreatingLoader).dismiss();
-                this.toastService.generateToast('Donor registered successfully!', 3000);
-                this.router.navigate(['login']);
+                this.authenticationService.sendVerificationEmail().then(() => {
+                    this.router.navigate(['login']);
+                    this.toastService.generateToast('Registration successful! Please check your indox to verify your profile', 5000);
+                });
             }).catch(async (error) => {
                 (await this.profileCreatingLoader).dismiss();
                 console.error(error);
                 this.toastService.generateToast('Error occured when registering', 5000);
-            })
+            });
     }
 
     public confirmPassword(): boolean {
