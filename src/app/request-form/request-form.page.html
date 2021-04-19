@@ -75,7 +75,7 @@
                         </div>
                         <ion-item>
                             <ion-label position="floating">NIC Number</ion-label>
-                            <ion-input type="number" formControlName="nicNumber"></ion-input>
+                            <ion-input type="text" formControlName="nicNumber"></ion-input>
                         </ion-item>
                         <div class="required-error"
                             *ngIf="nicNumber.touched && requestForm.hasError('required', 'nicNumber')">
