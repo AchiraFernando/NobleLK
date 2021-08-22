@@ -13,4 +13,6 @@ export class UserProfile {
     province: string;
     nicNumber: string;
     emailAddress: string;
+    latitude: number;
+    longitude: number;
 }

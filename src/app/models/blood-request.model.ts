@@ -11,4 +11,7 @@ export class BloodRequest {
     city: string;
     province: string;
     emailAddress: string;
+    latitude: number;
+    longitude: number;
+    requestId: string;
 }

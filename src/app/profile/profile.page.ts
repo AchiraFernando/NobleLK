@@ -55,6 +55,10 @@ export class ProfilePage {
         });
 
         this.loadProfile();
+
+        this.cacheService.userProfileChanged.subscribe((userProfile: UserProfile) => {
+            this.currentCoordinates = new google.maps.LatLng(userProfile.latitude, userProfile.longitude);
+        });
     }
 
     get firstName(): AbstractControl {
@@ -95,6 +99,18 @@ export class ProfilePage {
     }
     get emailAddress(): AbstractControl {
         return this.profileForm.get('emailAddress');
+    }
+
+    _currentCoordinates: google.maps.LatLng;
+    public get currentCoordinates(): google.maps.LatLng {
+        return this._currentCoordinates;
+    }
+    public set currentCoordinates(coordinates: google.maps.LatLng) {
+        this._currentCoordinates = coordinates;
+    }
+
+    locationOnChange(coordinates: google.maps.LatLng) {
+        this.currentCoordinates = coordinates;
     }
 
     private async loadProfile() {
@@ -154,6 +170,8 @@ export class ProfilePage {
         donorProfile.province = this.province.value;
         donorProfile.nicNumber = this.nicNumber.value;
         donorProfile.emailAddress = this.emailAddress.value;
+        donorProfile.latitude = this.currentCoordinates.lat();
+        donorProfile.longitude = this.currentCoordinates.lng();
 
         this.fireBaseService.updateProfile(donorProfile).then(async () => {
             (await this.updateProfileLoader).dismiss();

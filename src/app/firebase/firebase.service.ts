@@ -47,7 +47,22 @@ export class FireBaseService {
     }
 
     createBloodRequest(bloodRequest: BloodRequest) {
-        return this.angularFirestore.collection('requests').add(Object.assign({}, bloodRequest));
+        return this.angularFirestore.collection('requests').doc(bloodRequest.requestId).set((Object.assign({}, bloodRequest)));
+    }
+
+    getBloodRequest(requestId: string) {
+        const docRef = this.angularFirestore.collection('requests').doc(requestId);
+
+        return docRef.ref.get().then((doc) => {
+            if (doc.exists) {
+                return doc.data();
+            } else {
+                // doc.data() will be undefined in this case
+                throw new Error('Failed to find the request details!');
+            }
+        }).catch((error) => {
+            throw new Error('Failed to fetch the request details!');
+        });
     }
 
     public fetchDonorProfiles() {

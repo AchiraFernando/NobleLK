@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { DonorDetailsPageRoutingModule } from './donor-details-routing.module';
 
 import { DonorDetailsPage } from './donor-details.page';
+import { MapModule } from 'src/app/map/map.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DonorDetailsPageRoutingModule
+    DonorDetailsPageRoutingModule,
+    MapModule,
   ],
   declarations: [DonorDetailsPage]
 })

@@ -107,6 +107,10 @@
                             Complete address is required.
                         </div>
                         <ion-item>
+                            <ion-label style="color: black; font-size: 15px;">Select Your Location</ion-label>
+                        </ion-item>
+                        <app-map [readonly]="false" [currentLocation]="currentCoordinates" (locationChange)="locationOnChange($event)"></app-map>
+                        <ion-item>
                             <ion-label position="floating">Email Address</ion-label>
                             <ion-input type="email" formControlName="emailAddress"></ion-input>
                         </ion-item>

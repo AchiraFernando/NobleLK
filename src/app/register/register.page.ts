@@ -92,6 +92,18 @@ export class RegisterPage implements OnInit {
         return this.registerForm.get('reEnterPassword');
     }
 
+    _currentCoordinates: google.maps.LatLng;
+    public get currentCoordinates(): google.maps.LatLng {
+        return this._currentCoordinates;
+    }
+    public set currentCoordinates(coordinates: google.maps.LatLng) {
+        this._currentCoordinates = coordinates;
+    }
+
+    locationOnChange(coordinates: google.maps.LatLng) {
+        this.currentCoordinates = coordinates;
+    }
+
     ngOnInit() {}
 
     public registerClick() {
@@ -130,6 +142,8 @@ export class RegisterPage implements OnInit {
         donorProfile.province = this.province.value;
         donorProfile.nicNumber = this.nicNumber.value;
         donorProfile.emailAddress = this.emailAddress.value;
+        donorProfile.latitude = this.currentCoordinates.lat();
+        donorProfile.longitude = this.currentCoordinates.lng();
 
         this.fireBaseService.createProfile(donorProfile)
             .then(async (res) => {

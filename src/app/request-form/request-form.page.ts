@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { CacheService } from '../cache.service';
 import { FireBaseService } from '../firebase/firebase.service';
 import { BloodRequest } from '../models/blood-request.model';
 import { ToastService } from '../toast-service/toast.service';
@@ -21,6 +22,7 @@ export class RequestFormPage implements OnInit {
         private loadingController: LoadingController,
         private toastService: ToastService,
         private router: Router,
+        private cacheService: CacheService,
     ) {
         this.requestForm = this.formBuilder.group({
             firstName: ['', Validators.required],
@@ -75,6 +77,18 @@ export class RequestFormPage implements OnInit {
         return this.requestForm.get('emailAddress');
     }
 
+    _currentCoordinates: google.maps.LatLng;
+    public get currentCoordinates(): google.maps.LatLng {
+        return this._currentCoordinates;
+    }
+    public set currentCoordinates(coordinates: google.maps.LatLng) {
+        this._currentCoordinates = coordinates;
+    }
+
+    locationOnChange(coordinates: google.maps.LatLng) {
+        this.currentCoordinates = coordinates;
+    }
+
     ngOnInit() {
     }
 
@@ -98,17 +112,21 @@ export class RequestFormPage implements OnInit {
         request.province = this.province.value;
         request.nicNumber = this.nicNumber.value;
         request.emailAddress = this.emailAddress.value;
+        request.latitude = this.currentCoordinates.lat();
+        request.longitude = this.currentCoordinates.lng();
+        request.requestId = Date.now().toString(36) + Math.random().toString(36).substring(2);
 
         this.fireBaseService.createBloodRequest(request)
             .then(async (res) => {
                 (await loader).dismiss();
                 this.toastService.generateToast('Request successfull!', 3000);
-                this.router.navigate(['requested-donors']);
+                this.cacheService.lastRequest = request;
+                this.router.navigate(['requested-donors'], { queryParams: { requestId: request.requestId } });
             }).catch(async (error) => {
                 (await loader).dismiss();
                 console.error(error);
                 this.toastService.generateToast('Error occured when requesting', 5000);
-            })
+            });
     }
 
 }

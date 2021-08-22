@@ -1,15 +1,9 @@
-<ion-content>
-    <ion-grid>
-        <ion-row>
-            <ion-col [sizeMd]="6" [offsetMd]="3" class="logo-col">
-                <ion-img src="assets/images/logo.png" class="logo"></ion-img>
-            </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col [sizeMd]="6" [offsetMd]="3">
-                <ion-button [routerLink]="'/login'" size="large" class="card-text">Login as Donor</ion-button>
-                <ion-button [routerLink]="'/request-blood'" size="large" class="card-text">Request for Blood</ion-button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-content>
+<div class="main-container">
+    <div>
+        <ion-img src="assets/images/logo.png" class="logo"></ion-img>
+    </div>
+    <div class="button-container">
+        <button [routerLink]="'/login'" class="button button--secondary">DONOR LOGIN</button>
+        <button [routerLink]="'/request-blood'" class="button button--secondary" style="margin-top: 10px;">BLOOD REQUEST</button>
+    </div>
+</div>

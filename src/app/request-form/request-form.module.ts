@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RequestFormPageRoutingModule } from './request-form-routing.module';
 
 import { RequestFormPage } from './request-form.page';
+import { MapModule } from '../map/map.module';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { RequestFormPage } from './request-form.page';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    RequestFormPageRoutingModule
+    RequestFormPageRoutingModule,
+    MapModule,
   ],
   declarations: [RequestFormPage],
   providers: [FormBuilder],

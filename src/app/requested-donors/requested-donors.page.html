@@ -9,7 +9,15 @@
 
 <ion-content>
     <ion-list lines="none" style="background-color: transparent;">
-        <ion-card *ngFor="let donor of donorList" detail="true" (click)="viewDonor(donor.uid)">
+    <div style="display: flex; align-items: center;">
+        <ion-toggle [(ngModel)]="showAll" color="primary"></ion-toggle>
+        <ion-label>Show all donors</ion-label>
+    </div>
+    <div style="display: flex; align-items: center;">
+        <ion-toggle [(ngModel)]="sortByLocation" color="secondary"></ion-toggle>
+        <ion-label>Sort by location</ion-label>
+    </div>
+        <ion-card *ngFor="let donor of finalDonorList" detail="true" (click)="viewDonor(donor.uid)" style="cursor: pointer;">
             <ion-item background="transparent">
                     <ion-label class="ion-text-wrap">
                         <h3>{{ donor.firstname }}</h3>

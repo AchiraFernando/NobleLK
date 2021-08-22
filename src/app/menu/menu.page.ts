@@ -64,7 +64,7 @@ export class MenuPage implements OnInit {
     }
 
     private generateMenuItemList() {
-        if (this.router.url === '/login') {
+        if (this.router.url.includes('/login')) {
             return [
                 {
                     menuId: 'startup',
@@ -81,9 +81,9 @@ export class MenuPage implements OnInit {
                     title: 'Register',
                     url: '/register'
                 },
-            ]
+            ];
         }
-        if (this.router.url === '/profile') {
+        if (this.router.url.includes('/profile')) {
             return [
                 {
                     menuId: 'startup',
@@ -100,9 +100,9 @@ export class MenuPage implements OnInit {
                     title: 'Logout',
                     url: '/logout'
                 },
-            ]
+            ];
         }
-        if (this.router.url === '/register') {
+        if (this.router.url.includes('/register')) {
             return [
                 {
                     menuId: 'startup',
@@ -119,9 +119,9 @@ export class MenuPage implements OnInit {
                     title: 'Register',
                     url: '/register'
                 },
-            ]
+            ];
         }
-        if (this.router.url === '/requested-donors') {
+        if (this.router.url.includes('/requested-donors')) {
             return [
                 {
                     menuId: 'startup',
@@ -133,16 +133,16 @@ export class MenuPage implements OnInit {
                     title: 'New Blood Request',
                     url: '/request-blood'
                 }
-            ]
+            ];
         }
-        if (this.router.url === '/request-blood') {
+        if (this.router.url.includes('/request-blood')) {
             return [
                 {
                     menuId: 'startup',
                     title: 'Start-Up',
                     url: '/'
                 }
-            ]
+            ];
         }
     }
 
