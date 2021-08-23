@@ -144,6 +144,20 @@ export class MenuPage implements OnInit {
                 }
             ];
         }
+        if (this.router.url.includes('/forgot-password')) {
+            return [
+                {
+                    menuId: 'startup',
+                    title: 'Start-Up',
+                    url: '/'
+                },
+                {
+                    menuId: 'login',
+                    title: 'Login',
+                    url: '/login'
+                },
+            ];
+        }
     }
 
 }

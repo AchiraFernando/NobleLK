@@ -40,6 +40,10 @@ const routes: Routes = [
                 path: 'donor-details',
                 loadChildren: () => import('../requested-donors/donor-details/donor-details.module').then( m => m.DonorDetailsPageModule)
             },
+            {
+                path: 'forgot-password',
+                loadChildren: () => import('../forgot-password/forgot-password.module').then(m => m.ForgotPasswordPageModule)
+            },
         ]
     }
 ];

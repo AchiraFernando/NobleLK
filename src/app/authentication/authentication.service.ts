@@ -61,12 +61,7 @@ export class AuthenticationService {
 
     // recover password
     public passwordRecover(passwordResetEmail) {
-        return this.angularFireAuth.sendPasswordResetEmail(passwordResetEmail)
-            .then(() => {
-                window.alert('Password reset email has been sent, please check your inbox');
-            }).catch((error) => {
-                window.alert(error);
-        });
+        return this.angularFireAuth.sendPasswordResetEmail(passwordResetEmail);
     }
 
     public authenticatePhoneNumber(phoneNumber: string, recaptureVerifier) {
@@ -82,7 +77,7 @@ export class AuthenticationService {
     // returns true when user's email is verified
     public async isEmailVerified() {
         const user = await this.angularFireAuth.currentUser;
-        return (user.emailVerified !== false) ? true : false;
+        return ((user && user.emailVerified) !== false) ? true : false;
     }
 
     // store user in localstorage

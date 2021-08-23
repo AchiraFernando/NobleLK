@@ -54,8 +54,8 @@ export class LoginPage implements OnInit {
 
     private async checkUserLoggedIn() {
         if (this.authenticationService.isLoggedIn) {
-            let loader = this.loadingController.create({
-                message: "Logging in...",
+            const loader = this.loadingController.create({
+                message: 'Logging in...',
                 duration: 3000,
             });
 
@@ -70,26 +70,27 @@ export class LoginPage implements OnInit {
     }
 
     public async loginClick() {
-        let loader = this.loadingController.create({
+        const loader = this.loadingController.create({
             message: 'Loading...'
         });
 
         (await loader).present();
 
-        let isEmailVerified: boolean = await this.authenticationService.isEmailVerified();
-        if (!isEmailVerified) {
-            (await loader).dismiss();
-            this.toastService.generateToast('Login Failed, Please check your mail to verify the donor before login.', 5000);
-            return;
-        }
-
         this.authenticationService.signIn(this.email.value, this.password.value)
             .then(async (user) => {
                 (await loader).dismiss();
                 // verify login through email or phone number
+                const isEmailVerified: boolean = await this.authenticationService.isEmailVerified();
+                if (!isEmailVerified) {
+                    this.authenticationService.sendVerificationEmail().then(async () => {
+                        this.toastService.generateToast('Login Failed, Please check your mail to verify the donor before login.', 5000);
+                        (await loader).dismiss();
+                    });
+                    return;
+                }
                 this.presentModal().then((event) => {
                     if (event && event.data) {
-                        let isVerified: boolean = event.data['verified'];
+                        const isVerified: boolean = event.data['verified'];
                         if (isVerified) {
                             this.authenticationService.saveUserLocally(user);
                             this.toastService.generateToast('Login Successful!', 3000);
@@ -98,10 +99,10 @@ export class LoginPage implements OnInit {
                     }
                 });
             }).catch(async (error) => {
-                 console.log(error.message);
+                console.log(error.message);
                 (await loader).dismiss();
                 this.toastService.generateToast(error, 3000);
-            })
+            });
 
     }
 

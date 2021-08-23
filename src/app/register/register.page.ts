@@ -148,10 +148,8 @@ export class RegisterPage implements OnInit {
         this.fireBaseService.createProfile(donorProfile)
             .then(async (res) => {
                 (await this.profileCreatingLoader).dismiss();
-                this.authenticationService.sendVerificationEmail().then(() => {
-                    this.router.navigate(['login']);
-                    this.toastService.generateToast('Registration successful! Please check your indox to verify your profile', 5000);
-                });
+                this.router.navigate(['login']);
+                this.toastService.generateToast('Registration successful!', 5000);
             }).catch(async (error) => {
                 (await this.profileCreatingLoader).dismiss();
                 console.error(error);
