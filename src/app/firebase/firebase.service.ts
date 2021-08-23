@@ -4,6 +4,7 @@ import { UserProfile } from '../models/user-profile.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { BloodRequest } from '../models/blood-request.model';
+import { BloodBankDonor } from '../models/blood-bank-donor.model';
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +12,13 @@ import { BloodRequest } from '../models/blood-request.model';
 export class FireBaseService {
 
     public userProfiles: UserProfile[] = [];
+    public bloodBankDonors: BloodBankDonor[] = [];
 
     private _userProfilesChanged: Subject<UserProfile[]> = new Subject();
     public userProfileChanged: Observable<UserProfile[]> = this._userProfilesChanged.asObservable();
+
+    private _bloodBankDonorsChanged: Subject<BloodBankDonor[]> = new Subject();
+    public bloodBankDonorsChanged: Observable<BloodBankDonor[]> = this._bloodBankDonorsChanged.asObservable();
 
     public bloodRequest: BloodRequest;
 
@@ -69,6 +74,13 @@ export class FireBaseService {
         this.angularFirestore.collection('profiles').valueChanges().subscribe((profile) => {
             this.userProfiles = profile as UserProfile[];
             this._userProfilesChanged.next(this.userProfiles);
+        });
+    }
+
+    public fetchBloodBankDonors() {
+        this.angularFirestore.collection('bloodBankDonors').valueChanges().subscribe((donor) => {
+            this.bloodBankDonors = donor as BloodBankDonor[];
+            this._bloodBankDonorsChanged.next(this.bloodBankDonors);
         });
     }
 

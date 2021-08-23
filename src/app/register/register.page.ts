@@ -47,6 +47,8 @@ export class RegisterPage implements OnInit {
             password: ['', Validators.required],
             reEnterPassword: ['', Validators.required],
         });
+
+        this.fireBaseService.fetchBloodBankDonors();
     }
 
     get firstName(): AbstractControl {
@@ -107,6 +109,10 @@ export class RegisterPage implements OnInit {
     ngOnInit() {}
 
     public registerClick() {
+        if (!this.fireBaseService.bloodBankDonors.find((donor) => donor.donorId === this.donorId.value)) {
+            this.toastService.generateToast('You must be registered in the Blood Bank in-order to proceed', 5000);
+            return;
+        }
         this.signUp(this.emailAddress.value, this.password.value);
     }
 
