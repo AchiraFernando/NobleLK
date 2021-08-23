@@ -48,7 +48,7 @@
                                     <span>{{buildAddress()}}</span>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-label style="color: black; font-size: 15px;">Selected Location</ion-label>
+                                    <ion-label style="font-size: 15px;">Selected Location</ion-label>
                                 </ion-item>
                                 <app-map [readonly]="true" [currentLocation]="currentCoordinates" (locationChange)="locationOnChange($event)"></app-map>
                                 <ion-item>
@@ -149,7 +149,7 @@
                                     Complete address is required.
                                 </div>
                                 <ion-item>
-                                    <ion-label style="color: black; font-size: 15px;">Select Your Location</ion-label>
+                                    <ion-label style="font-size: 15px;">Select Your Location</ion-label>
                                 </ion-item>
                                 <app-map [readonly]="false" [currentLocation]="currentCoordinates" (locationChange)="locationOnChange($event)"></app-map>
                                 <ion-item>

@@ -81,9 +81,9 @@ export class RequestedDonorsPage implements OnInit {
 
     private filterByBloodGroup(donorList: UserProfile[]): UserProfile[] {
         const filteredList: UserProfile[] = [];
-        donorList.forEach(profile => {
-            if (this.cacheService.lastRequest.bloodGroup === profile.bloodGroup) {
-                filteredList.push(profile);
+        donorList.forEach(donor => {
+            if (this.cacheService.lastRequest.bloodGroup === donor.bloodGroup) {
+                filteredList.push(donor);
             }
         });
         return filteredList;
