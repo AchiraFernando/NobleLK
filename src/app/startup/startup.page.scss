@@ -3,18 +3,18 @@
     margin-top: 20px;
 }
 
-.main-container {
+.container-div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     height: 100%;
 }
 
-.button-container {
+.container-buttons {
     display: flex;
     flex-direction: column;
-    margin-top: 10em;
+    align-items: center;
 }
 
 .button {
@@ -22,8 +22,8 @@
     cursor: pointer;
     border-radius: 10px;
     border-color: transparent;
-    width: 50rem;
-    height: 8em;
+    width: 40rem;
+    height: 8rem;
 
     &--primary {
         background-color:  #bee7ff;
