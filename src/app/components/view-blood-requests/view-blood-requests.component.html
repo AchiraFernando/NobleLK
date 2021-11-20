@@ -1,0 +1,8 @@
+<div style="display: flex; flex-wrap: wrap;">
+  <ion-card *ngFor="let request of bloodRequests" color="tertiary" style="width: 15rem; padding-left: 10px; cursor: pointer;" (click)="bloodRequestClick(request)">
+    <p><strong>Name:</strong> {{request.firstname}} {{request.surname}}</p>
+    <p><strong>Blood Group:</strong> {{request.bloodGroup}}</p>
+    <p><strong>Units Needed:</strong> {{request.numberOfUnits}}</p>
+    <p><strong>City:</strong> {{request.city}}</p>
+  </ion-card>
+</div>

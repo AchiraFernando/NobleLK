@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Register</ion-title>
+    <ion-title color="light">Register</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +16,7 @@
         </ion-row>
         <ion-row>
             <ion-col [sizeMd]="6" [offsetMd]="3">
-                <ion-card>
+                <ion-card color="tertiary">
                     <form [formGroup]="registerForm" (ngSubmit)="registerClick()">
                         <!-- <ion-item>
                             <ion-label position="floating">Username</ion-label>
@@ -25,29 +25,36 @@
                         <div class="required-error" *ngIf="username.touched && registerForm.hasError('required', 'username')">
                             Username is required.
                         </div> -->
-                        <ion-item>
-                            <ion-label position="floating">First Name</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="stacked" color="primary">Profile Picture</ion-label>
+                            <ion-input type="file" accept="*.png.jpg" style="font-size: 13px;" (change)="onImageChange($event)"></ion-input>
+                            <ion-thumbnail>
+                                <img *ngIf="imageToShow" src="{{imageToShow}}" alt="profile-picture">
+                            </ion-thumbnail>
+                        </ion-item>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">First Name</ion-label>
                             <ion-input type="text" formControlName="firstName"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="firstName.touched && registerForm.hasError('required', 'firstName')">
                             First Name is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="floating">Surname</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">Surname</ion-label>
                             <ion-input type="text" formControlName="surname"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="surname.touched && registerForm.hasError('required', 'surname')">
                             Surname is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="floating">Blood Bank Donor ID</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">Blood Bank Donor ID</ion-label>
                             <ion-input type="text" formControlName="donorId"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="donorId.touched && registerForm.hasError('required', 'donorId')">
                             Donor ID is required.
                         </div>
-                        <ion-item>
-                            <ion-label>Blood Group</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label color="primary">Blood Group</ion-label>
                             <ion-select placeholder="Select One" formControlName="bloodGroup">
                                 <ion-select-option value="A+">A+</ion-select-option>
                                 <ion-select-option value="A-">A-</ion-select-option>
@@ -71,63 +78,58 @@
                         <div class="required-error" *ngIf="bloodGroup.touched && registerForm.hasError('required', 'bloodGroup')">
                             Blood Group is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="floating">Age</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">You Next Donation Date</ion-label>
+                            <ion-datetime value="{{nextDonationDate}}" display-timezone="utc" (ionChange)="nextDonationDateChange($event)"></ion-datetime>
+                        </ion-item>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">Age</ion-label>
                             <ion-input type="number" formControlName="age"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="age.touched && registerForm.hasError('required', 'age')">
                             Age is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="floating">Mobile Number</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">Mobile Number</ion-label>
                             <ion-input type="number" formControlName="mobileNumber"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="mobileNumber.touched && registerForm.hasError('required', 'mobileNumber')">
                             Mobile Number is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="stacked">Address</ion-label>
-                            <ion-input placeholder="Address Line 1" type="text" formControlName="addressLine1" autocomplete="none" ></ion-input>
-                            <ion-input placeholder="Address Line 2" type="text" formControlName="addressLine2" autocomplete="none"></ion-input>
-                            <ion-input placeholder="City" type="text" formControlName="city" autocomplete="none"></ion-input>
-                            <ion-input placeholder="Province" type="text" formControlName="province" autocomplete="none"></ion-input>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">City</ion-label>
+                            <ion-input type="text" formControlName="city"></ion-input>
                         </ion-item>
-                        <div
-                            class="required-error"
-                            *ngIf="(addressLine1.touched && registerForm.hasError('required', 'addressLine1')) ||
-                            (addressLine2.touched && registerForm.hasError('required', 'addressLine2')) ||
-                            (city.touched && registerForm.hasError('required', 'city')) ||
-                            (province.touched && registerForm.hasError('required', 'province'))"
-                            >
-                                Complete address is required.
+                        <div class="required-error" *ngIf="city.touched && registerForm.hasError('required', 'city')">
+                            City is required.
                         </div>
-                        <ion-item>
-                            <ion-label style="font-size: 15px;">Select Your Location</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label style="font-size: 15px;" color="primary">Select Your Location</ion-label>
                         </ion-item>
                         <app-map [readonly]="false" [currentLocation]="currentCoordinates" (locationChange)="locationOnChange($event)"></app-map>
-                        <ion-item>
-                            <ion-label position="floating">NIC Number</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">NIC Number</ion-label>
                             <ion-input type="text" formControlName="nicNumber"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="nicNumber.touched && registerForm.hasError('required', 'nicNumber')">
                             NIC Number is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="floating">Email Address</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">Email Address</ion-label>
                             <ion-input type="email" formControlName="emailAddress"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="emailAddress.touched && registerForm.hasError('required', 'emailAddress')">
                             Email Address is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="floating">Password</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">Password</ion-label>
                             <ion-input type="password" formControlName="password"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="password.touched && registerForm.hasError('required', 'password')">
                             Password is required.
                         </div>
-                        <ion-item>
-                            <ion-label position="floating">Re-Enter Password</ion-label>
+                        <ion-item color="tertiary">
+                            <ion-label position="floating" color="primary">Re-Enter Password</ion-label>
                             <ion-input type="password" formControlName="reEnterPassword"></ion-input>
                         </ion-item>
                         <div class="required-error" *ngIf="reEnterPassword.touched && registerForm.hasError('required', 'reEnterPassword')">

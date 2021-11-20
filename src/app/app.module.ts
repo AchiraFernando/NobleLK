@@ -11,10 +11,12 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { ToastService } from './toast-service/toast.service';
 import { CacheService } from './cache.service';
-
+import { FileUploadService } from './file-upload.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -24,15 +26,17 @@ import { CacheService } from './cache.service';
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
+        HttpClientModule,
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
         AngularFirestoreModule,
+        AngularFireStorageModule,
         AngularFireAuthModule,
         AngularFireDatabaseModule,
     ],
     providers: [
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        ToastService, CacheService,
+        ToastService, CacheService, FileUploadService
     ],
     bootstrap: [AppComponent],
 })

@@ -3,48 +3,48 @@
         <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ donor?.firstname }} {{ donor?.surname }}</ion-title>
+        <ion-title color="light">{{ donor?.firstname }} {{ donor?.surname }}</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
     <ion-grid>
         <ion-row>
             <ion-col [sizeMd]="6" [offsetMd]="0">
-                <ion-card>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Firstname</ion-label>
+                <ion-card color="tertiary">
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Firstname</ion-label>
                         <ion-input [value]="donor?.firstname" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Surname</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Surname</ion-label>
                         <ion-input [value]="donor?.surname" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Blood Bank Donor ID</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Blood Bank Donor ID</ion-label>
                         <ion-input [value]="donor?.bloodBankDonorId" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Blood Group</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Blood Group</ion-label>
                         <ion-input [value]="donor?.bloodGroup" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Age</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Age</ion-label>
                         <ion-input [value]="donor?.age" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Email Address</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Email Address</ion-label>
                         <ion-input [value]="donor?.emailAddress" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Mobile Number</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Mobile Number</ion-label>
                         <ion-input [value]="donor?.mobileNumber" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label position="stacked" style="color: grey;">Current Address</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label position="stacked"  color="primary">Current Address</ion-label>
                         <ion-input [value]="generateAddress(donor)" [readonly]="true"></ion-input>
                     </ion-item>
-                    <ion-item>
-                        <ion-label style="color: black; font-size: 15px;">Location</ion-label>
+                    <ion-item color="tertiary">
+                        <ion-label style="font-size: 15px;" color="primary">Location</ion-label>
                     </ion-item>
                     <app-map [readonly]="true" [currentLocation]="currentCoordinates" [secondLocation]="secondLocation"></app-map>
                 </ion-card>

@@ -1,0 +1,44 @@
+<div style="height: 100%;">
+  <ion-header class="header-style">
+    <ion-title color="light" style="padding-top: 8px;">Request Details</ion-title>
+  </ion-header>
+
+  <ion-content style="height: 100%;">
+    <div style="display: flex; flex-direction: column;">
+      <ion-label class="info"><strong>Recipient Name: </strong>{{request.firstname}} {{request.surname}}</ion-label>
+      <ion-label class="info"><strong>Blood Group: </strong>{{request.bloodGroup}}</ion-label>
+      <ion-label class="info"><strong>Units Needed: </strong>{{request.numberOfUnits}}</ion-label>
+      <ion-label class="info"><strong>City: </strong>{{request.city}}</ion-label>
+      <ion-label class="info"><strong>Age: </strong>{{request.age}}</ion-label>
+    </div>
+
+    <ion-button color="primary" href="{{call()}}" style="margin-top: 30px; margin-left: 20px;">
+      <ion-icon name="call-outline" style="padding-right: 10px;"></ion-icon>
+        Call Now
+    </ion-button>
+
+    <div style="border-bottom: 1px solid #00007e; margin-left: 0px; margin-top: 8px; margin-top: 25px;"></div>
+
+    <ion-button *ngIf="!_completeRequestToggle" style="background-color: #14c004; margin-top: 30px; margin-left: 20px;" (click)="completeRequestToggle()">Complete Request</ion-button>
+
+    <form *ngIf="_completeRequestToggle" [formGroup]="requestForm" (ngSubmit)="completeClick()" class="form-style">
+        <ion-item color="tertiary">
+            <ion-label position="stacked" color="primary">Email Address: </ion-label>
+            <ion-input type="email" formControlName="emailAddress"></ion-input>
+        </ion-item>
+        <div class="required-error" *ngIf="emailAddress.touched && requestForm.hasError('required', 'emailAddress')">
+            Email Address is required.
+        </div>
+        <ion-item color="tertiary">
+            <ion-label position="stacked" color="primary">NIC Number: </ion-label>
+            <ion-input type="text" formControlName="nicNumber"></ion-input>
+        </ion-item>
+        <div class="required-error" *ngIf="nicNumber.touched && requestForm.hasError('required', 'nicNumber')">
+            NIC Number is required.
+        </div>
+
+        <ion-button style="margin-top: 30px; margin-bottom: 30px;" type="submit" [disabled]="disableSubmit()">Complete</ion-button>
+    </form>
+
+  </ion-content>
+</div>

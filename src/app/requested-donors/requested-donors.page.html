@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Requested Donors</ion-title>
+        <ion-title color="light">Requested Donors</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -17,9 +17,9 @@
         <ion-toggle [(ngModel)]="sortByLocation" color="secondary"></ion-toggle>
         <ion-label>Sort by location</ion-label>
     </div>
-        <ion-card *ngFor="let donor of finalDonorList" detail="true" (click)="viewDonor(donor.uid)" style="cursor: pointer;">
-            <ion-item background="transparent">
-                    <ion-label class="ion-text-wrap">
+        <ion-card *ngFor="let donor of finalDonorList" detail="true" (click)="viewDonor(donor.uid)" style="cursor: pointer;" color="tertiary">
+            <ion-item background="transparent" color="tertiary">
+                    <ion-label class="ion-text-wrap" color="primary">
                         <h3>{{ donor.firstname }}</h3>
                         <p>{{ donor.bloodGroup }}</p>
                     </ion-label>

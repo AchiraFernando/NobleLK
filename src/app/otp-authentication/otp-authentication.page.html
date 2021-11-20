@@ -2,7 +2,7 @@
     <ion-header>
         <ion-toolbar>
             <div style="display: flex;">
-                <ion-title>OTP Verification</ion-title>
+                <ion-title color="light">OTP Verification</ion-title>
                 <ion-button color="light" fill="solid" (click)="closeModal()">CLOSE</ion-button>
             </div>
         </ion-toolbar>
@@ -13,11 +13,11 @@
         <ion-grid>
             <ion-row>
                 <ion-col [sizeMd]="6" [offsetMd]="3">
-                    <ion-card style="top: 40%;">
+                    <ion-card style="top: 40%;" color="tertiary">
                         <form [formGroup]="otpForm" (ngSubmit)="verifyOTP()">
                             <div>
                                 <div>
-                                    <ion-item>
+                                    <ion-item color="tertiary">
                                         <ion-label position="floating">Phone number</ion-label>
                                         <ion-input type="number" formControlName="phoneNumber" placeholder="0718956841"></ion-input>
                                     </ion-item>
@@ -27,7 +27,7 @@
                                 </div>
                                 <ion-button color="primary" class="resend-button" (click)="sendOTP()">{{getSendText()}}</ion-button>
                             </div>
-                            <ion-item>
+                            <ion-item color="tertiary">
                                 <ion-label position="floating">Code</ion-label>
                                 <ion-input type="number" formControlName="code" placeholder="000000"></ion-input>
                             </ion-item>

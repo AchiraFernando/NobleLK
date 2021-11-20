@@ -1,0 +1,98 @@
+<ion-card color="tertiary" class="donor-information">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>First Name</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>Surname</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>Blood Group</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>Blood Bank Donor ID</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>Age</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>City</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>Province</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>Email</strong></ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="column-data">
+        <div class="ion-text-center">
+          <ion-text><strong>Mobile Number</strong></ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let donor of donorList">
+      <ion-col class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.firstname}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.surname}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.bloodGroup}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.bloodBankDonorId}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.age}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.city}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.province}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.emailAddress}}</ion-text>
+        </div>
+      </ion-col>
+      <ion-col *ngIf="!simpleView" class="row-data">
+        <div class="ion-text-center">
+          <ion-text>{{donor.mobileNumber}}</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>

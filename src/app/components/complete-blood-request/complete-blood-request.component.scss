@@ -1,0 +1,22 @@
+.header-style {
+    background-color: var(--ion-color-primary);
+    height: 40px;
+}
+
+.info {
+    margin-top: 25px;
+    margin-left: 20px;
+}
+
+.form-style {
+    margin-left: 20px;
+    margin-top: 30px;
+    margin-right: 20px;
+}
+
+.required-error {
+    color: red;
+    padding-top: 0.2rem;
+    padding-left: 5px;
+    font-size: 12px;
+}

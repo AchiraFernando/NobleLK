@@ -1,0 +1,45 @@
+    <div class="main-container">
+        <div class="container-logo">
+            <ion-img src="assets/images/logo.png" class="logo"></ion-img>
+        </div>
+        <div class="action-section">
+            <div class="tiles">
+                <ion-button class="action-button" style="--background: #0000FF" [routerLink]="'/donors'">
+                    <div class="tile-card">
+                        <ion-icon color="light" class="icon-style" name="heart-outline"></ion-icon>
+                        <div style="display: flex; flex-direction: column;">
+                            <ion-label color="light" style="font-size: x-large;">DONORS</ion-label>
+                            <ion-label color="light" style="font-size: x-large; padding-top: 7px; font-weight: bold;">{{donorList.length}}</ion-label>
+                        </div>
+                    </div>
+                </ion-button>
+
+                <ion-button class="action-button" style="--background: #2fb02f" [routerLink]="'/request-blood'">
+                    <div class="tile-card">
+                        <ion-icon color="light" class="icon-style" name="medkit-outline"></ion-icon>
+                        <ion-label color="light" style="font-size: x-large;">REQUEST</ion-label>
+                    </div>
+                </ion-button>
+
+                <ion-button class="action-button" style="--background: #d1d113" [routerLink]="'/login'">
+                    <div class="tile-card">
+                        <ion-icon color="light" class="icon-style" name="person-add-outline"></ion-icon>
+                        <ion-label color="light" style="font-size: x-large;">NEW DONOR</ion-label>
+                    </div>
+                </ion-button>
+
+                <ion-button class="action-button" style="--background: #FF4500" [routerLink]="'/find-blood-banks'">
+                    <div class="tile-card">
+                        <ion-icon color="light" class="icon-style" name="location-outline"></ion-icon>
+                        <ion-label color="light" style="font-size: x-large;">BLOOD BANKS</ion-label>
+                    </div>
+                </ion-button>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <ion-label color="primary" class="section-title">BLOOD REQUESTS</ion-label>
+            <div style="border-bottom: 1px solid #00007e; margin-left: 10px; margin-top: 8px;"></div>
+            <app-view-blood-requests></app-view-blood-requests>
+        </div>
+    </div>

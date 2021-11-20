@@ -1,1 +1,2 @@
-<div #map style="width:100%;height:20rem"></div>
+<div #map style="width:100%;height:100%" *ngIf="isFullScreen"></div>
+<div #map style="width:100%;height:20rem" *ngIf="!isFullScreen"></div>

@@ -11,6 +11,7 @@ export class CacheService {
     currentUser: User;
     userProfile: UserProfile;
     lastRequest: BloodRequest;
+    currentDonors: UserProfile[];
 
     private _userChanged: Subject<User> = new Subject();
     public userChanged: Observable<User> = this._userChanged.asObservable();
@@ -20,6 +21,9 @@ export class CacheService {
 
     private _requestProfileChanged: Subject<BloodRequest> = new Subject();
     public requestProfileChanged: Observable<BloodRequest> = this._requestProfileChanged.asObservable();
+
+    private _currentDonorsChanged: Subject<UserProfile> = new Subject();
+    public currentDonorsChanged: Observable<UserProfile> = this._currentDonorsChanged.asObservable();
 
     constructor(
     ) { }
@@ -42,6 +46,12 @@ export class CacheService {
     public clearCurrentUser(): void {
         this.currentUser = null;
         this.userProfile = null;
+    }
+
+    public loadCurrentDonors(currentDonors): void {
+        this.currentDonors = [];
+        this.currentDonors = currentDonors;
+        this._currentDonorsChanged.next(currentDonors);
     }
 
 }

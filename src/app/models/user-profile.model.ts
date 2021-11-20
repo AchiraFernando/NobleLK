@@ -15,4 +15,7 @@ export class UserProfile {
     emailAddress: string;
     latitude: number;
     longitude: number;
+    profilePicture: string;
+    previousDonationDate: string;
+    nextDonationDate: string;
 }

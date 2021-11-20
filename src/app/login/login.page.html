@@ -4,7 +4,7 @@
             <ion-buttons slot="start">
                 <ion-menu-button></ion-menu-button>
             </ion-buttons>
-            <ion-title>Login</ion-title>
+            <ion-title color="light">Login</ion-title>
         </ion-toolbar>
     </ion-header>
 
@@ -17,26 +17,26 @@
             </ion-row>
             <ion-row>
                 <ion-col [sizeMd]="6" [offsetMd]="3">
-                    <ion-card>
+                    <ion-card color="tertiary">
                         <form [formGroup]="loginForm" (ngSubmit)="loginClick()">
-                            <ion-item>
-                                <ion-label position="floating">Email</ion-label>
+                            <ion-item color="tertiary">
+                                <ion-label position="floating" color="primary">Email</ion-label>
                                 <ion-input type="email" formControlName="email" autocomplete="off"></ion-input>
                             </ion-item>
                             <div class="required-error" *ngIf="email.touched && loginForm.hasError('required', 'email')">
                                 Email is required.
                             </div>
-                            <ion-item>
-                                <ion-label position="floating">Password</ion-label>
+                            <ion-item color="tertiary">
+                                <ion-label position="floating" color="primary">Password</ion-label>
                                 <ion-input type="Password" formControlName="password" autocomplete="off"></ion-input>
                             </ion-item>
                             <div class="required-error" *ngIf="password.touched && loginForm.hasError('required', 'password')">
                                 Password is required.
                             </div>
                             <br/>
-                            <label class="forgot-pass-label" [routerLink]="'/forgot-password'">
+                            <ion-label class="forgot-pass-label" [routerLink]="'/forgot-password'" color="primary">
                                 Forgot password?
-                            </label>
+                            </ion-label>
 
                             <div class="login-button-container">
                                 <ion-button color="primary" expand="block" type="submit" class="login-button" [disabled]="!loginForm.valid">Login</ion-button>
@@ -47,9 +47,9 @@
             </ion-row>
             <ion-row>
                 <ion-col [sizeMd]="6" [offsetMd]="3" class="register-col">
-                    <label class="register-label">
+                    <ion-label class="register-label" color="primary">
                         Don't have an account? <a  class="register-span" [routerLink]="'/register'">Register Now.</a>
-                    </label>
+                    </ion-label>
                 </ion-col>
             </ion-row>
         </ion-grid>

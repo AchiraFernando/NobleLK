@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation/ngx';
+import { BloodBank } from '../models/blood-bank.model';
+import { UserProfile } from '../models/user-profile.model';
 
 @Component({
     selector: 'app-map',
@@ -23,7 +25,16 @@ export class MapComponent implements AfterViewInit, OnInit, OnChanges {
     public secondLocation: google.maps.LatLng;
 
     @Input()
+    public donorList: UserProfile[] = [];
+
+    @Input()
+    public bloodBankList: BloodBank[] = [];
+
+    @Input()
     public zoomLevel = 12;
+
+    @Input()
+    public isFullScreen = false;
 
     @Output()
     public locationChange: EventEmitter<google.maps.LatLng> = new EventEmitter<google.maps.LatLng>();
@@ -51,6 +62,39 @@ export class MapComponent implements AfterViewInit, OnInit, OnChanges {
                 this.marker2 = this.createMarker(this.secondLocation, 'ddf542');
             }
         }
+
+        if (this.donorList && this.donorList.length) {
+            const infowindow = new google.maps.InfoWindow();
+            this.donorList.forEach((donor, index) => {
+                const coordinates: google.maps.LatLng = new google.maps.LatLng(0);
+                coordinates.lat = () => donor.latitude;
+                coordinates.lng = () => donor.longitude;
+                const infoContent = `
+                    <p style="font-size: 14px;">
+                        <strong>Name:</strong> ${donor.firstname} ${donor.surname} <br />
+                        <strong>Blood Group:</strong> ${donor.bloodGroup} <br />
+                        <strong>Mobile Number:</strong> +94${donor.mobileNumber}
+                    </p>
+                `;
+                this.createMarker(coordinates, 'ddf542', infowindow, infoContent);
+            });
+        }
+
+        if (this.bloodBankList && this.bloodBankList.length) {
+            const infowindow = new google.maps.InfoWindow();
+            this.bloodBankList.forEach((bloodBank, index) => {
+                const coordinates: google.maps.LatLng = new google.maps.LatLng(0);
+                coordinates.lat = () => bloodBank.latitude;
+                coordinates.lng = () => bloodBank.longitude;
+                const infoContent = `
+                    <p style="font-size: 14px;">
+                        <strong>Name:</strong> ${bloodBank.name} <br />
+                        <strong>Contact Number:</strong> +${bloodBank.phoneNumber} <br />
+                    </p>
+                `;
+                this.createMarker(coordinates, 'ff0000', infowindow, infoContent);
+            });
+        }
     }
 
     ngAfterViewInit() {
@@ -64,6 +108,7 @@ export class MapComponent implements AfterViewInit, OnInit, OnChanges {
         if (!this.currentLocation) {
             this.geolocation.getCurrentPosition().then((res: Geoposition) => {
                 this.currentLocation = new google.maps.LatLng(res.coords.latitude, res.coords.longitude);
+                this.locationChange.emit(this.currentLocation);
                 this.marker1 = this.createMarker(this.currentLocation);
                 this.map.setCenter(this.currentLocation);
             }).catch((err) => {
@@ -79,7 +124,12 @@ export class MapComponent implements AfterViewInit, OnInit, OnChanges {
         }
     }
 
-    createMarker(coordinates: google.maps.LatLng, markerColor?: string): google.maps.Marker {
+    createMarker(
+        coordinates: google.maps.LatLng,
+        markerColor?: string,
+        infoWindow?: google.maps.InfoWindow,
+        contentString?: string
+    ): google.maps.Marker {
         // The marker
         const marker = new google.maps.Marker({
             position: coordinates,
@@ -97,6 +147,11 @@ export class MapComponent implements AfterViewInit, OnInit, OnChanges {
             //     content: 'Latitude: ' + event.latLng.lat() + '<br>Longitude: ' + event.latLng.lng()
             // });
             // infowindow.open(this.map, marker);
+        });
+
+        google.maps.event.addListener(marker, 'click', (event) => {
+            infoWindow.setContent(contentString);
+            infoWindow.open(this.map, marker);
         });
 
         return marker;

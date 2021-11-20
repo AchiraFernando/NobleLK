@@ -32,10 +32,10 @@ export class RequestFormPage implements OnInit {
             age: ['', Validators.required],
             nicNumber: ['', Validators.required],
             mobileNumber: ['', Validators.required],
-            addressLine1: ['', Validators.required],
-            addressLine2: [''],
+            // addressLine1: ['', Validators.required],
+            // addressLine2: [''],
             city: ['', Validators.required],
-            province: ['', Validators.required],
+            // province: ['', Validators.required],
             emailAddress: ['', Validators.required],
         });
     }
@@ -61,18 +61,18 @@ export class RequestFormPage implements OnInit {
     get mobileNumber(): AbstractControl {
         return this.requestForm.get('mobileNumber');
     }
-    get addressLine1(): AbstractControl {
-        return this.requestForm.get('addressLine1');
-    }
-    get addressLine2(): AbstractControl {
-        return this.requestForm.get('addressLine2');
-    }
+    // get addressLine1(): AbstractControl {
+    //     return this.requestForm.get('addressLine1');
+    // }
+    // get addressLine2(): AbstractControl {
+    //     return this.requestForm.get('addressLine2');
+    // }
     get city(): AbstractControl {
         return this.requestForm.get('city');
     }
-    get province(): AbstractControl {
-        return this.requestForm.get('province');
-    }
+    // get province(): AbstractControl {
+    //     return this.requestForm.get('province');
+    // }
     get emailAddress(): AbstractControl {
         return this.requestForm.get('emailAddress');
     }
@@ -106,10 +106,10 @@ export class RequestFormPage implements OnInit {
         request.bloodGroup = this.bloodGroup.value;
         request.age = this.age.value;
         request.mobileNumber = this.mobileNumber.value;
-        request.addressLine1 = this.addressLine1.value;
-        request.addressLine2 = this.addressLine2.value;
+        // request.addressLine1 = this.addressLine1.value;
+        // request.addressLine2 = this.addressLine2.value;
         request.city = this.city.value;
-        request.province = this.province.value;
+        // request.province = this.province.value;
         request.nicNumber = this.nicNumber.value;
         request.emailAddress = this.emailAddress.value;
         request.latitude = this.currentCoordinates.lat();

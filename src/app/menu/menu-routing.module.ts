@@ -10,7 +10,8 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: () => import('../startup/startup.module').then( m => m.StartupPageModule)
+                redirectTo: '/dashboard',
+                pathMatch: 'full'
             },
             {
                 path: 'login',
@@ -43,6 +44,18 @@ const routes: Routes = [
             {
                 path: 'forgot-password',
                 loadChildren: () => import('../forgot-password/forgot-password.module').then(m => m.ForgotPasswordPageModule)
+            },
+            {
+                path: 'donors',
+                loadChildren: () => import('../donors/donors.module').then( m => m.DonorsPageModule)
+            },
+            {
+                path: 'find-blood-banks',
+                loadChildren: () => import('../find-donors/find-donors.module').then( m => m.FindDonorsPageModule)
+            },
+            {
+                path: 'blood-request-detail',
+                loadChildren: () => import('../blood-request-detail/blood-request-detail.module').then( m => m.BloodRequestDetailPageModule)
             },
         ]
     }

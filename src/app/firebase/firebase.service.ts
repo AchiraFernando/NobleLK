@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { BloodRequest } from '../models/blood-request.model';
 import { BloodBankDonor } from '../models/blood-bank-donor.model';
+import { BloodBank } from '../models/blood-bank.model';
 
 @Injectable({
     providedIn: 'root'
@@ -13,12 +14,20 @@ export class FireBaseService {
 
     public userProfiles: UserProfile[] = [];
     public bloodBankDonors: BloodBankDonor[] = [];
+    public bloodRequests: BloodRequest[] = [];
+    public bloodBanks: BloodBank[] = [];
 
     private _userProfilesChanged: Subject<UserProfile[]> = new Subject();
     public userProfileChanged: Observable<UserProfile[]> = this._userProfilesChanged.asObservable();
 
     private _bloodBankDonorsChanged: Subject<BloodBankDonor[]> = new Subject();
     public bloodBankDonorsChanged: Observable<BloodBankDonor[]> = this._bloodBankDonorsChanged.asObservable();
+
+    private _bloodRequestsChanged: Subject<BloodRequest[]> = new Subject();
+    public bloodReqestsChanged: Observable<BloodRequest[]> = this._bloodRequestsChanged.asObservable();
+
+    private _bloodBanksChanged: Subject<BloodBank[]> = new Subject();
+    public bloodBanksChanged: Observable<BloodBank[]> = this._bloodBanksChanged.asObservable();
 
     public bloodRequest: BloodRequest;
 
@@ -84,5 +93,22 @@ export class FireBaseService {
         });
     }
 
+    public fetchBloodRequests() {
+        this.angularFirestore.collection('requests').valueChanges().subscribe((request) => {
+            this.bloodRequests = request as BloodRequest[];
+            this._bloodRequestsChanged.next(this.bloodRequests);
+        });
+    }
 
+    public removeBloodRequest(requestId: string) {
+        const docRef = this.angularFirestore.collection('requests').doc(requestId);
+        return docRef.delete();
+    }
+
+    public fetchBloodBanks() {
+        this.angularFirestore.collection('bloodBanks').valueChanges().subscribe((request) => {
+            this.bloodBanks = request as BloodBank[];
+            this._bloodBanksChanged.next(this.bloodBanks);
+        });
+    }
 }

@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="light">Find Blood Bank</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="display: flex; align-items: center; margin-top: 10px; margin-bottom: 10px;">
+    <img src="../../assets/images/red-pin.png" style="padding-left: 20px;"> - Blood Banks
+    <img src="../../assets/images/yellow-pin.png" style="padding-left: 20px;"> - Registered Blood Donors
+  </div>
+  <app-map [readonly]="true" [donorList]="donorList" [bloodBankList]="bloodBankList" [isFullScreen]="true"></app-map>
+</ion-content>

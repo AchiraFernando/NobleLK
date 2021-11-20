@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { CacheService } from '../cache.service';
+import { DonationReminderComponent } from '../components/donation-reminder/donation-reminder.component';
+import { FileUploadService } from '../file-upload.service';
 import { FireBaseService } from '../firebase/firebase.service';
 import { UserProfile } from '../models/user-profile.model';
 import { User } from '../models/user.model';
@@ -16,8 +18,14 @@ import { ToastService } from '../toast-service/toast.service';
 export class ProfilePage {
 
     public profileForm: FormGroup;
-
     public isEdit: boolean = false;
+
+    // Variable to store imageLink from api response
+    imageLink = '';
+    imageFile: File = null; // Variable to store image file
+    imageToShow: any = null;
+
+    public nextDonationDate = null;
 
     public get currentDonorProfile(): UserProfile {
         return this.cacheService.userProfile;
@@ -29,6 +37,12 @@ export class ProfilePage {
     private updateProfileLoader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
         message: 'Profile Updating...'
     });
+    private profileCreatingLoader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
+        message: 'Profile Creating...'
+    });
+    private profilePictureLoader: Promise<HTMLIonLoadingElement> = this.loadingController.create({
+        message: 'Loading Profile Picture...'
+    });
 
     constructor(
         private formBuilder: FormBuilder,
@@ -37,6 +51,8 @@ export class ProfilePage {
         private authenticationService: AuthenticationService,
         private fireBaseService: FireBaseService,
         private cacheService: CacheService,
+        private fileUploadService: FileUploadService,
+        private modalController: ModalController,
     ) {
         this.profileForm = this.formBuilder.group({
             firstName: ['', Validators.required],
@@ -46,10 +62,10 @@ export class ProfilePage {
             bloodGroup: ['', Validators.required],
             age: ['', Validators.required],
             mobileNumber: ['', Validators.required],
-            addressLine1: ['', Validators.required],
-            addressLine2: [''],
+            // addressLine1: ['', Validators.required],
+            // addressLine2: [''],
             city: ['', Validators.required],
-            province: ['', Validators.required],
+            // province: ['', Validators.required],
             nicNumber: ['', Validators.required],
             emailAddress: ['', Validators.required],
         });
@@ -82,18 +98,18 @@ export class ProfilePage {
     get mobileNumber(): AbstractControl {
         return this.profileForm.get('mobileNumber');
     }
-    get addressLine1(): AbstractControl {
-        return this.profileForm.get('addressLine1');
-    }
-    get addressLine2(): AbstractControl {
-        return this.profileForm.get('addressLine2');
-    }
+    // get addressLine1(): AbstractControl {
+    //     return this.profileForm.get('addressLine1');
+    // }
+    // get addressLine2(): AbstractControl {
+    //     return this.profileForm.get('addressLine2');
+    // }
     get city(): AbstractControl {
         return this.profileForm.get('city');
     }
-    get province(): AbstractControl {
-        return this.profileForm.get('province');
-    }
+    // get province(): AbstractControl {
+    //     return this.profileForm.get('province');
+    // }
     get nicNumber(): AbstractControl {
         return this.profileForm.get('nicNumber');
     }
@@ -109,6 +125,28 @@ export class ProfilePage {
         this._currentCoordinates = coordinates;
     }
 
+    public async onImageChange(event) {
+        this.imageFile = event.target.files[0];
+        (await this.profilePictureLoader).present();
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.imageToShow = reader.result as string;
+        };
+        reader.readAsDataURL(this.imageFile);
+
+        (await this.profilePictureLoader).dismiss();
+    }
+
+    async uploadProfilePicture(id: string): Promise<any> {
+        if (!this.imageFile) {
+            this.toastService.generateToast('Please attach a profile picture', 5000);
+            throw new Error();
+        }
+        return await this.fileUploadService.uploadToFireStorage(this.imageFile, id, 'profile-pictures');
+    }
+
+
     locationOnChange(coordinates: google.maps.LatLng) {
         this.currentCoordinates = coordinates;
     }
@@ -120,8 +158,8 @@ export class ProfilePage {
         (await this.profileLoader).present();
 
         this.fireBaseService.getProfile(donor.uid).then(async (userProfile: UserProfile) => {
-            this.initializeProfile();
             this.cacheService.loadUserProfile(userProfile);
+            this.initializeProfile();
             (await this.profileLoader).dismiss();
         }).catch(async (error) => {
             this.toastService.generateToast(error, 5000);
@@ -137,12 +175,13 @@ export class ProfilePage {
         this.bloodGroup.setValue(this.currentDonorProfile.bloodGroup);
         this.age.setValue(this.currentDonorProfile.age);
         this.mobileNumber.setValue(this.currentDonorProfile.mobileNumber);
-        this.addressLine1.setValue(this.currentDonorProfile.addressLine1);
-        this.addressLine2.setValue(this.currentDonorProfile.addressLine2);
+        // this.addressLine1.setValue(this.currentDonorProfile.addressLine1);
+        // this.addressLine2.setValue(this.currentDonorProfile.addressLine2);
         this.city.setValue(this.currentDonorProfile.city);
-        this.province.setValue(this.currentDonorProfile.province);
+        // this.province.setValue(this.currentDonorProfile.province);
         this.nicNumber.setValue(this.currentDonorProfile.nicNumber);
         this.emailAddress.setValue(this.currentDonorProfile.emailAddress);
+        this.imageLink = this.currentDonorProfile.profilePicture;
     }
 
     public buildAddress(): string {
@@ -164,31 +203,69 @@ export class ProfilePage {
         donorProfile.bloodGroup = this.bloodGroup.value;
         donorProfile.age = this.age.value;
         donorProfile.mobileNumber = this.mobileNumber.value;
-        donorProfile.addressLine1 = this.addressLine1.value;
-        donorProfile.addressLine2 = this.addressLine2.value;
+        // donorProfile.addressLine1 = this.addressLine1.value;
+        // donorProfile.addressLine2 = this.addressLine2.value;
         donorProfile.city = this.city.value;
-        donorProfile.province = this.province.value;
+        // donorProfile.province = this.province.value;
         donorProfile.nicNumber = this.nicNumber.value;
         donorProfile.emailAddress = this.emailAddress.value;
         donorProfile.latitude = this.currentCoordinates.lat();
         donorProfile.longitude = this.currentCoordinates.lng();
+        donorProfile.longitude = this.currentCoordinates.lng();
+        donorProfile.nextDonationDate = this.nextDonationDate;
+        donorProfile.previousDonationDate = this.currentDonorProfile.nextDonationDate;
 
-        this.fireBaseService.updateProfile(donorProfile).then(async () => {
-            (await this.updateProfileLoader).dismiss();
-            this.loadProfile();
-            this.toastService.generateToast('Profile updated successfully!', 3000);
-        }).catch(async () => {
-            (await this.updateProfileLoader).dismiss();
-            this.toastService.generateToast('Error updating profile', 5000);
-        });
+        if (this.imageToShow !== null) {
+            this.uploadProfilePicture(donorProfile.uid).then(
+                async (imageUrl) => {
+                    donorProfile.profilePicture = imageUrl;
+                    this.fireBaseService.updateProfile(donorProfile).then(async () => {
+                        (await this.updateProfileLoader).dismiss();
+                        this.loadProfile();
+                        this.toastService.generateToast('Profile updated successfully!', 3000);
+                    }).catch(async () => {
+                        (await this.updateProfileLoader).dismiss();
+                        this.toastService.generateToast('Error updating profile', 5000);
+                    });
+                }).catch(async (error) => {
+                    (await this.updateProfileLoader).dismiss();
+                    this.toastService.generateToast(`Error occured when updating profile - ${error}`, 5000);
+                });
+        } else {
+            this.fireBaseService.updateProfile(donorProfile).then(async () => {
+                (await this.updateProfileLoader).dismiss();
+                this.loadProfile();
+                this.toastService.generateToast('Profile updated successfully!', 3000);
+            }).catch(async () => {
+                (await this.updateProfileLoader).dismiss();
+                this.toastService.generateToast('Error updating profile', 5000);
+            });
+        }
 
         this.isEdit = false;
+        this.imageToShow = null;
         this.profileForm.reset('valid');
+    }
+
+    public async presentReminderModal() {
+        const modal = await this.modalController.create({
+        component: DonationReminderComponent,
+            cssClass: 'my-custom-class'
+        });
+
+        await modal.present();
+
+        return modal.onDidDismiss();
+    }
+
+    public async setReminderClick() {
+        await this.presentReminderModal();
     }
 
     public resetClick() {
         this.initializeProfile();
         this.isEdit = false;
+        this.imageToShow = null;
         this.profileForm.reset('valid');
     }
 
@@ -197,5 +274,15 @@ export class ProfilePage {
         this.isEdit = true;
     }
 
+    public disableSubmit() {
+        if (this.imageToShow !== null) {
+            return false;
+        }
+        return !this.profileForm.valid;
+    }
+
+    nextDonationDateChange(event) {
+        this.nextDonationDate = event.target.value;
+    }
 }
 

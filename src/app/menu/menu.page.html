@@ -1,22 +1,22 @@
-<!-- <ion-split-pane> -->
-    <ion-menu contentId="content">
+<ion-split-pane contentId="main">
+    <ion-menu contentId="main" type="push" open="true">
         <ion-header>
-            <ion-toolbar>
-                <ion-title>Menu</ion-title>
+            <ion-toolbar style="height: 175px;">
+                <ion-title color="light" [ngStyle]="titleStyles">Noble LK</ion-title>
+                <div class="avatar" *ngIf="isUserLoggedIn && currentUserProfile">
+                    <ngx-avatar *ngIf="!currentUserProfile.profilePicture" name="{{currentUserProfile?.firstname}} {{currentUserProfile?.surname}}"></ngx-avatar>
+                    <ngx-avatar *ngIf="currentUserProfile.profilePicture" src="{{currentUserProfile.profilePicture}}"></ngx-avatar>
+                    <div class="avatar-name-label">
+                        <ion-label color="light">{{currentUserProfile?.firstname}} {{currentUserProfile?.surname}}</ion-label>
+                        <ion-icon name="chevron-forward-circle-outline" class="avatar-name-icon"></ion-icon>
+                    </div>
+                </div>
             </ion-toolbar>
         </ion-header>
-
-        <ion-content>
-            <div class="avatar" *ngIf="isUserLoggedIn && currentUserProfile">
-                <ngx-avatar name="{{currentUserProfile?.firstname}} {{currentUserProfile?.surname}}"></ngx-avatar>
-                <div class="avatar-name-label">
-                    <ion-label>{{currentUserProfile?.firstname}} {{currentUserProfile?.surname}}</ion-label>
-                    <ion-icon name="chevron-forward-circle-outline" class="avatar-name-icon"></ion-icon>
-                </div>
-            </div>
-            <ion-list [ngClass]="currentUserProfile ? 'button-list' : ''">
+        <ion-content color="tertiary">
+            <ion-list *ngIf="pages && pages.length > 0" [ngClass]="currentUserProfile ? 'button-list' : ''" class="list-style">
                 <ion-menu-toggle [autoHide]="false" *ngFor="let p of pages">
-                    <ion-item routerDirection="forward" [class.active-item]="router.url === p.url" button (click)="buttonClick(p.menuId, p.url)">
+                    <ion-item color="tertiary" routerDirection="forward" [class.active-item]="router.url.includes(p.url)" button (click)="buttonClick(p.menuId, p.url)">
                         {{p.title}}
                     </ion-item>
                 </ion-menu-toggle>
@@ -24,5 +24,5 @@
         </ion-content>
     </ion-menu>
 
-    <ion-router-outlet id="content" main></ion-router-outlet>
-<!-- </ion-split-pane> -->
+    <ion-router-outlet id="main" main></ion-router-outlet>
+</ion-split-pane>

@@ -56,6 +56,18 @@ export class MenuPage implements OnInit {
             case 'request-blood':
                 this.router.navigateByUrl(url);
                 break;
+            case 'dashboard':
+                this.router.navigateByUrl(url);
+                break;
+            case 'find-blood-banks':
+                this.router.navigateByUrl(url);
+                break;
+            case 'requested-donors':
+                this.router.navigateByUrl(url);
+                break;
+            case 'donor-details':
+                this.router.navigateByUrl(url);
+                break;
             case 'logout':
                 this.authenticationService.signOut();
                 this.cacheService.clearCurrentUser();
@@ -63,13 +75,19 @@ export class MenuPage implements OnInit {
         }
     }
 
+    get titleStyles() {
+        if (this.isUserLoggedIn && this.currentUserProfile) {
+            return { 'margin-top': '16px' };
+        }
+    }
+
     private generateMenuItemList() {
         if (this.router.url.includes('/login')) {
             return [
                 {
-                    menuId: 'startup',
-                    title: 'Start-Up',
-                    url: '/'
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
                 },
                 {
                     menuId: 'login',
@@ -86,9 +104,9 @@ export class MenuPage implements OnInit {
         if (this.router.url.includes('/profile')) {
             return [
                 {
-                    menuId: 'startup',
-                    title: 'Start-Up',
-                    url: '/'
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
                 },
                 {
                     menuId: 'profile',
@@ -105,9 +123,9 @@ export class MenuPage implements OnInit {
         if (this.router.url.includes('/register')) {
             return [
                 {
-                    menuId: 'startup',
-                    title: 'Start-Up',
-                    url: '/'
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
                 },
                 {
                     menuId: 'login',
@@ -124,9 +142,38 @@ export class MenuPage implements OnInit {
         if (this.router.url.includes('/requested-donors')) {
             return [
                 {
-                    menuId: 'startup',
-                    title: 'Start-Up',
-                    url: '/'
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
+                },
+                {
+                    menuId: 'requested-donors',
+                    title: 'Requested Donors',
+                    url: '/requested-donors'
+                },
+                {
+                    menuId: 'request-blood',
+                    title: 'New Blood Request',
+                    url: '/request-blood'
+                }
+            ];
+        }
+        if (this.router.url.includes('/donor-details')) {
+            return [
+                {
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
+                },
+                {
+                    menuId: 'donor-details',
+                    title: 'Donor Details',
+                    url: '/donor-details'
+                },
+                {
+                    menuId: 'requested-donors',
+                    title: 'Requested Donors',
+                    url: '/requested-donors'
                 },
                 {
                     menuId: 'request-blood',
@@ -138,23 +185,56 @@ export class MenuPage implements OnInit {
         if (this.router.url.includes('/request-blood')) {
             return [
                 {
-                    menuId: 'startup',
-                    title: 'Start-Up',
-                    url: '/'
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
+                },
+                {
+                    menuId: 'request-blood',
+                    title: 'New Blood Request',
+                    url: '/request-blood'
                 }
             ];
         }
         if (this.router.url.includes('/forgot-password')) {
             return [
                 {
-                    menuId: 'startup',
-                    title: 'Start-Up',
-                    url: '/'
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
                 },
                 {
                     menuId: 'login',
                     title: 'Login',
                     url: '/login'
+                },
+            ];
+        }
+        if (this.router.url.includes('/donors')) {
+            return [
+                {
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
+                },
+                {
+                    menuId: 'donors',
+                    title: 'Donors',
+                    url: '/donors'
+                },
+            ];
+        }
+        if (this.router.url.includes('/find-blood-banks')) {
+            return [
+                {
+                    menuId: 'dashboard',
+                    title: 'Dashboard',
+                    url: '/dashboard'
+                },
+                {
+                    menuId: 'find-blood-banks',
+                    title: 'Find Blood Banks',
+                    url: '/find-blood-banks'
                 },
             ];
         }
